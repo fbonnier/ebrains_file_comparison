@@ -109,12 +109,12 @@ class Method:
                 check1, error1 = self.__check_methods__[self.__name__](self.original_file["path"])
             except Exception as e:
                 check1 = False
-                error1 = "Method.check_file_formats: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__)))
+                error1 = "Method.check_file_formats: " + str("".join(traceback.format_exception(e)))
             try:
                 check2, error2 = self.__check_methods__[self.__name__](self.new_file["path"])
             except Exception as e:
                 check2 = False
-                error2 = "Method.check_file_formats: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__)))
+                error2 = "Method.check_file_formats: " + str("".join(traceback.format_exception(e)))
                 # self.differences_report = [{"Fatal Error": "check_file_formats FAIL " + str(type(e)) + ": file have Unknown or different file formats -- " + str(e)}]
                 # return False, file_comparison.report_generator.generate_report_1_file (self.original_file, self.new_file, self.__name__, self.score, self.differences_report)
         check = check1 and check2
@@ -132,15 +132,15 @@ class Method:
                 ratio = file_comparison.nilsimsa.compute_ratio (score_nilsimsa)
                 self.hash_score = ratio*100.
         except Exception as e:
-            self.errors.append("compare_hash error: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-            self.log.append("compare_hash error: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+            self.errors.append("compare_hash error: " + str("".join(traceback.format_exception(e))))
+            self.log.append("compare_hash error: " + str("".join(traceback.format_exception(e))))
 
     # 2.pair
     def check_file_formats_pair (self):
         try:
             return self.__check_methods__[self.__name__](self.original_file, self.new_file), {}
         except Exception as e:
-            self.differences_report = [{"Fatal Error": "check_file_formats FAIL " + str(type(e)) + ": file have Unknown or different file formats -- " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__)))}]
+            self.differences_report = [{"Fatal Error": "check_file_formats FAIL " + str(type(e)) + ": file have Unknown or different file formats -- " + str("".join(traceback.format_exception(e)))}]
             return False, file_comparison.report_generator.generate_report_1_file (self.original_file, self.new_file, self.__name__, self.score, self.differences_report)
 
     # 4
@@ -239,8 +239,8 @@ class Method:
             
             
         except Exception as e:
-            self.log.append ("Method.compute_differences: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-            self.errors.append ("Method.compute_differences: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+            self.log.append ("Method.compute_differences: " + str("".join(traceback.format_exception(e))))
+            self.errors.append ("Method.compute_differences: " + str("".join(traceback.format_exception(e))))
 
     def topair (self, ipair):
         ipair["method"] = self.__name__

@@ -16,7 +16,7 @@ def core (origin, new):
         res = (origin - new)/origin
     except Exception as e:
         print ("Core:")
-        print(str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        print(str("".join(traceback.format_exception(e))))
         if origin == 0. and origin == new:
             res = 0.
     return res

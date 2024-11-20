@@ -28,9 +28,9 @@ def compute_differences_report (origin, new):
 
 
     except Exception as e:
-        block_diff["error"].append("TEXT compute_differences_report: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff["error"].append("TEXT compute_differences_report: " + str("".join(traceback.format_exception(e))))
         block_diff["nerrors"] += 1
-        print ("TEXT compute_differences_report: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        print ("TEXT compute_differences_report: " + str("".join(traceback.format_exception(e))))
 
     return block_diff
 
@@ -87,7 +87,7 @@ def check_file_formats (filepath):
         # np.load(filepath, allow_pickle=True)
         return True, None
     except Exception as e:
-        print ("TXT check_file_format: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        print ("TXT check_file_format: " + str("".join(traceback.format_exception(e))))
         return False, str(e)
 
 # def file_comparison.iterables.iterable_are_equal (original_item, new_item, comparison_path, block_diff):

@@ -27,7 +27,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
         block_diff_1list["delta"] = stats.delta(origin, new) 
         # block_diff_1list["delta"] = np.nanmean(np.absolute(origin - new))
     except Exception as e:
-        block_diff_1list["log"].append("Mean Delta Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("Mean Delta Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["delta"] = None
 
     # Test maximum delta
@@ -35,7 +35,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["max delta"] = stats.maximum_delta(origin, new)
     except Exception as e:
-        block_diff_1list["log"].append("Max Delta Stat:" + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("Max Delta Stat:" + str("".join(traceback.format_exception(e))))
         block_diff_1list["max delta"] = None
 
     # Test string values
@@ -43,7 +43,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new)
     except Exception as e:
-        block_diff_1list["log"].append("Levenshtein Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("Levenshtein Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["levenshtein"] = None
 
     # Test mape
@@ -51,7 +51,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["mape"] = stats.mean_absolute_percentage_error(origin, new)
     except Exception as e:
-        block_diff_1list["log"].append("MAPE Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("MAPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["mape"] = None
     
     # Test mspe
@@ -60,7 +60,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["mspe"] = stats.mean_squared_percentage_error(origin, new)        
     except Exception as e:
-        block_diff_1list["log"].append("MSPE Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("MSPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["mspe"] = None
 
     # Test rmspe
@@ -68,7 +68,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["rmspe"] = stats.root_mean_squared_percentage_error(origin, new)        
     except Exception as e:
-        block_diff_1list["log"].append("RMSPE Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("RMSPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["rmspe"] = None
 
     # Test mpe
@@ -76,7 +76,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["mpe"] = stats.mean_percentage_error(origin, new)
     except Exception as e:
-        block_diff_1list["log"].append("MPE Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("MPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["mpe"] = None
     
     # Test rpd
@@ -84,7 +84,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["rpd"] = stats.mean_relative_percentage_difference(origin, new)
     except Exception as e:
-        block_diff_1list["log"].append("RPD Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("RPD Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["rpd"] = None
             
     # Test nilsimsa
@@ -92,7 +92,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     try:
         block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin, new)
     except Exception as e:
-        block_diff_1list["log"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        block_diff_1list["log"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["nilsimsa"] = None
 
     # Count the number of value differences
@@ -101,9 +101,9 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
             if origin[iel] != new[iel]:
                 block_diff_1list["ndiff"] += 1
         except Exception as e:
-            block_diff_1list["log"].append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-            block_diff_1list["error"].append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-            print ("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+            block_diff_1list["log"].append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(e))))
+            block_diff_1list["error"].append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(e))))
+            print ("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(e))))
 
     return block_diff_1list
 """
@@ -162,6 +162,6 @@ byte method objects
 #         print ("\nError: method " + method + " Exception for " + file.name + " and " + file2.name)
 #         print (e)
 #         ratio = 0.
-#         differences = {"error" : str("".join(traceback.format_exception(value=e, tb=e.__traceback__)))}
+#         differences = {"error" : str("".join(traceback.format_exception(e)))}
 
 #     return ratio, differences

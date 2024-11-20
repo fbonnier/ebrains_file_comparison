@@ -54,8 +54,8 @@ def run_file_comparison (origin, new, jsonfile_out):
             ipair = imethod.topair(ipair)
             
     except Exception as e:
-        error_glob.append (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-        print (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        error_glob.append (str("".join(traceback.format_exception(e))))
+        print (str("".join(traceback.format_exception(e))))
 
     # Write data in JSON file
     with open(jsonfile_out, "w") as f:
@@ -94,8 +94,8 @@ def run_file_comparison_json (jsonfile, jsonfile_out):
             run_file_comparison (origin=json_data["Metadata"]["run"]["outputs"], new=json_data["Outputs"], jsonfile_out=jsonfile_out)
             
         except Exception as e:
-            error_glob.append (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-            print (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+            error_glob.append (str("".join(traceback.format_exception(e))))
+            print (str("".join(traceback.format_exception(e))))
 
 
 def run_file_comparison_files(origin_files, new_files, jsonfile_out):
@@ -112,8 +112,8 @@ def run_file_comparison_files(origin_files, new_files, jsonfile_out):
         run_file_comparison (origin=origin, new=new, jsonfile_out=jsonfile_out)
             
     except Exception as e:
-        error_glob.append (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
-        print (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        error_glob.append (str("".join(traceback.format_exception(e))))
+        print (str("".join(traceback.format_exception(e))))
 
 
 if __name__ == "__main__":
@@ -170,24 +170,24 @@ if __name__ == "__main__":
             try:
                 profile.run('run_file_comparison_json(jsonfile.name, jsonfile_out.name)')
             except Exception as e1:
-                print (str("".join(traceback.format_exception(etype=type(e1), value=e1, tb=e1.__traceback__))))
+                print (str("".join(traceback.format_exception(e1))))
         elif expected_results and simulated_results:
             try:
                 profile.run('run_file_comparison_files(expected_results, simulated_results)')
             except Exception as e2:
-                print (str("".join(traceback.format_exception(etype=type(e2), value=e2, tb=e2.__traceback__))))
+                print (str("".join(traceback.format_exception(e2))))
 
     else:
         if jsonfile and jsonfile_out:
             try:
                 run_file_comparison_json(jsonfile=jsonfile.name, jsonfile_out=jsonfile_out.name)
             except Exception as e1:
-                print (str("".join(traceback.format_exception(etype=type(e1), value=e1, tb=e1.__traceback__))))
+                print (str("".join(traceback.format_exception(e1))))
         elif expected_results and simulated_results:
             try:
                 run_file_comparison_files(expected_results, simulated_results, jsonfile_out=jsonfile_out.name)
             except Exception as e2:
-                print (str("".join(traceback.format_exception(etype=type(e2), value=e2, tb=e2.__traceback__))))
+                print (str("".join(traceback.format_exception(e2))))
                 
 
     # Exit Done ?
