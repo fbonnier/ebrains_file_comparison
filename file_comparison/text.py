@@ -18,7 +18,7 @@ def compute_differences_report (origin, new):
             # Check number or lines
             if len(origin_data) != len(new_data):
                 block_diff["ndiff"] += abs(len(origin_data) - len(new_data))
-                block_diff["log"].append(str(origin["path"]) + " and " + str(new["path"]) + " files are not the same size. Diff=" + block_diff["ndiff"] + " lines")
+                block_diff["log"].append(str(origin["path"]) + " and " + str(new["path"]) + " files are not the same size. Diff=" + str(block_diff["ndiff"]) + " lines")
             
             nlines = min(len(origin_data), len(new_data))
             comparison_path = new["path"]
@@ -44,7 +44,7 @@ def compare_line(origin:str, new:str, comparison_path: str, block_diff:dict):
         new_words = new.split()
         if len(origin_words) != len(new_words):
             block_diff["ndiff"] += abs(len(origin_words) - len(new_words))
-            block_diff["log"].append("lines are not the same size. Diff=" + block_diff["ndiff"] + " lines")
+            block_diff["log"].append("lines are not the same size. Diff=" + str(block_diff["ndiff"]) + " lines")
 
         nwords = min(len(origin_words), len(new_words))
 
