@@ -160,13 +160,13 @@ class Method:
            
         ### Sum for all datasets the scores
         for idataset in self.differences_report:
-            if not numpy.isnan(idataset["levenshtein"]): self.levenshtein_score += 100. - idataset["levenshtein"]
+            if idataset["levenshtein"]: self.levenshtein_score += 100. - idataset["levenshtein"]
             if idataset["nilsimsa"]: self.nilsimsa_score += idataset["nilsimsa"]
-            if not numpy.isnan(idataset["rmspe"]): self.rmspe_score += 100 - idataset["rmspe"]
-            if not numpy.isnan(idataset["mspe"]): self.mspe_score += 100 - idataset["mspe"]
-            if not numpy.isnan(idataset["mape"]): self.mape_score += 100 - idataset["mape"]
-            if not numpy.isnan(idataset["mpe"]): self.mpe_score += 100 - idataset["mpe"]
-            if not numpy.isnan(idataset["rpd"]): self.mrpd_score += 100 - idataset["rpd"]
+            if idataset["rmspe"]: self.rmspe_score += 100 - idataset["rmspe"]
+            if idataset["mspe"]: self.mspe_score += 100 - idataset["mspe"]
+            if idataset["mape"]: self.mape_score += 100 - idataset["mape"]
+            if idataset["mpe"]: self.mpe_score += 100 - idataset["mpe"]
+            if idataset["rpd"]: self.mrpd_score += 100 - idataset["rpd"]
             self.max_delta = max(self.max_delta, idataset["max delta"])
             self.delta += idataset["delta"]
             self.ndiff += idataset["ndiff"]
