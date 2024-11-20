@@ -77,7 +77,7 @@ def run_file_comparison (origin, new, jsonfile_out):
                 total_score += ipair["score"]
                 n_valid_values += 1
         
-        json_data_out["Verification Method Reusability"]["score"] = total_score/n_valid_values
+        json_data_out["Verification Method Reusability"]["score"] =  total_score/n_valid_values if n_valid_values else 0.
         json_data_out["Verification Method Reusability"]["report"] = pairs
     
         # Methods report

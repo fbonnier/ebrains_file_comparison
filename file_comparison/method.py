@@ -161,7 +161,7 @@ class Method:
         ### Sum for all datasets the scores
         for idataset in self.differences_report:
             if not numpy.isnan(idataset["levenshtein"]): self.levenshtein_score += 100. - idataset["levenshtein"]
-            if not numpy.isnan(idataset["nilsimsa"]): self.nilsimsa_score += idataset["nilsimsa"]
+            if idataset["nilsimsa"]: self.nilsimsa_score += idataset["nilsimsa"]
             if not numpy.isnan(idataset["rmspe"]): self.rmspe_score += 100 - idataset["rmspe"]
             if not numpy.isnan(idataset["mspe"]): self.mspe_score += 100 - idataset["mspe"]
             if not numpy.isnan(idataset["mape"]): self.mape_score += 100 - idataset["mape"]
