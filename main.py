@@ -54,8 +54,8 @@ def run_file_comparison (origin, new, jsonfile_out):
             ipair = imethod.topair(ipair)
             
     except Exception as e:
-        error_glob.append (str("".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))))
-        print (str("".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))))
+        error_glob.append (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        print (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
 
     # Write data in JSON file
     with open(jsonfile_out, "w") as f:
@@ -94,8 +94,8 @@ def run_file_comparison_json (jsonfile, jsonfile_out):
             run_file_comparison (origin=json_data["Metadata"]["run"]["outputs"], new=json_data["Outputs"], jsonfile_out=jsonfile_out)
             
         except Exception as e:
-            error_glob.append (str("".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))))
-            print (str("".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))))
+            error_glob.append (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+            print (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
 
 
 def run_file_comparison_files(origin_files, new_files, jsonfile_out):
@@ -112,8 +112,8 @@ def run_file_comparison_files(origin_files, new_files, jsonfile_out):
         run_file_comparison (origin=origin, new=new, jsonfile_out=jsonfile_out)
             
     except Exception as e:
-        error_glob.append (str("".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))))
-        print (str("".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))))
+        error_glob.append (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
+        print (str("".join(traceback.format_exception(value=e, tb=e.__traceback__))))
 
 
 if __name__ == "__main__":
