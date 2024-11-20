@@ -52,7 +52,7 @@ def find_bijective (produced_outputs, expected_outputs):
             block["format"] = format_block["format"][0]
         else:
             block["format"] = format_block["format"]
-            block["error"].append(format_block["error"])
+            block["error"].append(format_block["format error"])
 
         blocks_of_pairs.append(block)
 
