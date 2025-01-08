@@ -251,7 +251,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
 
         print ("iterable_are_equal Iterable type")
         #################   LIST    ###################
-        if ((type(original_item) == list) and (type(new_item) == list)):
+        if (((type(original_item) == list) and (type(new_item) == list)) or ((type(original_item) == tuple) and (type(new_item) == tuple))):
             # Check array length
             if len(original_item) - len(new_item):
                 block_diff["error"].append (comparison_path+str(type(original_item)) + ": Different size, missing data")
