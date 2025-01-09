@@ -14,12 +14,8 @@ def compute_1el_difference (origin, new):
 
 def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
  
-    block_diff_1list = {"origin": {"type": str(type(origin.tolist())), "value": origin.tolist()}, "new": {"type": str(type(new.tolist())), "value": new.tolist()}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe":None, "rpd": None , "max delta": None, "delta": None, "error": [], "log": [], "ndiff": 0, "advice": []}
+    block_diff_1list = {"origin": {"type": str(type(origin.tolist())), "value": origin.tolist()}, "new": {"type": str(type(new.tolist())), "value": new.tolist()}, "levenshtein": 0., "nilsimsa": 0., "rmspe": 0., "mspe": 0., "mape": 0., "mpe":0., "rpd": 0. , "max delta": 0., "delta": 0., "error": [], "log": [], "ndiff": 0, "advice": []}
 
-    # # Test types: if types are different, return error type
-    # if type(origin) != type(new):
-    #     block_diff_1list["error"] = "Values are not the same type"
-    #     return (block_diff_1list)
 
     # Test mean delta
     # Compute Mean Absolute difference between two values
