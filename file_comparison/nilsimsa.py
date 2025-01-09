@@ -69,15 +69,3 @@ def nilsimsa_single (f1_path, f2_path, buffer_size=32):
             # Initialize strings
             f1_byte = f1.read(buffer_size)
             f2_byte = f2.read(buffer_size)
-
-
-        # Last comparison in case the files closed before filling 64 bytes arrays
-        # if len(f1_str):
-        #     score = fuzz.ratio (str(Nilsimsa(f1_byte).hexdigest()), str(Nilsimsa(f2_byte).hexdigest()))
-        #     NBUFFER += 1
-        #     TOTAL_SCORE += score
-            # print ("Last score for arrays of size " + str(len(f1_str)) + " " + str(len(f2_str)) + " = " + str(score))
-        # print ("\nTotal Distance = " + str(TOTAL_SCORE))
-        # print ("Nb buffers = " + str(NBUFFER))
-        # print ("Average Nilsimsa Distance = " + str(TOTAL_SCORE / NBUFFER))
-        # print ("Average Nilsimsa Ratio = " + str(TOTAL_RATIO / NBUFFER * 100.0) + " %")

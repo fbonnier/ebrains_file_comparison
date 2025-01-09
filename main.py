@@ -1,12 +1,4 @@
 import os
-import file_comparison.file_compare as fc
-# import file_comparison.nilsimsa as nl
-# import file_comparison.npz as npz
-# import file_comparison.neo as neo
-# import file_comparison.hamming as hm
-# import file_comparison.levenshtein as lv
-# import file_comparison.report_generator as report
-# import file_comparison.downloader as downloader
 import file_comparison.bijective as bijective
 import file_comparison.method as method
 import profile

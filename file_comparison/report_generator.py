@@ -1,6 +1,5 @@
 # Report generator Module
 import os
-# import file_comparison.file_compare as file_compare
 import file_comparison.stats as stats
 import numpy as np
 import traceback
@@ -143,21 +142,3 @@ byte method objects
     'block x':
 }
 """
-
-# def compute_differences (file, file2, method):
-
-#     ratio = 0.
-#     differences = {}
-#     try:
-#         print (method)
-#         print (file_compare.all_methods[method])
-#         ratio, differences = file_compare.all_methods[method](file.url+file.name, file2.url+file2.name)
-#         print ("SCORE = " + str(ratio))
-
-#     except Exception as e:
-#         print ("\nError: method " + method + " Exception for " + file.name + " and " + file2.name)
-#         print (e)
-#         ratio = 0.
-#         differences = {"error" : str("".join(traceback.format_exception(e)))}
-
-#     return ratio, differences
