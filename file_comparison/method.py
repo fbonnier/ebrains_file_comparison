@@ -153,7 +153,7 @@ class Method:
         self.mape_score = 0.
         self.mpe_score = 0.
         self.mrpd_score = 0.
-        self.max_delta = None
+        self.max_delta = 0.
         self.delta = 0.
         self.ndiff = 0
         self.score = 0.
@@ -169,7 +169,7 @@ class Method:
             if idataset["rpd"]: self.mrpd_score += 100 - idataset["rpd"]
             if idataset["max delta"]: self.max_delta = max(self.max_delta, idataset["max delta"])
             if idataset["delta"]: self.delta += idataset["delta"]
-            self.ndiff += idataset["ndiff"]
+            if idataset["ndiff"]: self.ndiff += idataset["ndiff"]
 
         self.levenshtein_score += 100. * (self.number_of_values - self.ndiff)
         self.levenshtein_score = self.levenshtein_score / self.number_of_values
