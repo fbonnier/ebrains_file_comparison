@@ -19,7 +19,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test mean delta
     # Compute Mean Absolute difference between two values
     try:
-        block_diff_1list["delta"] = stats.delta(origin, new) 
+        block_diff_1list["delta"] = stats.delta(origin, new).item()
         # block_diff_1list["delta"] = np.nanmean(np.absolute(origin - new))
     except Exception as e:
         block_diff_1list["log"].append("Mean Delta Stat: " + str("".join(traceback.format_exception(e))))
@@ -28,7 +28,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test maximum delta
     # Compute Maximum difference in dataset
     try:
-        block_diff_1list["max delta"] = stats.maximum_delta(origin, new)
+        block_diff_1list["max delta"] = stats.maximum_delta(origin, new).item()
     except Exception as e:
         block_diff_1list["log"].append("Max Delta Stat:" + str("".join(traceback.format_exception(e))))
         block_diff_1list["max delta"] = None
@@ -36,7 +36,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test string values
     # Compute Levenshtein distance percentage between two strings
     try:
-        block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new)
+        block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new).item()
     except Exception as e:
         block_diff_1list["log"].append("Levenshtein Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["levenshtein"] = None
@@ -44,7 +44,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test mape
     # Compute Absolute Percentage Error between two values
     try:
-        block_diff_1list["mape"] = stats.mean_absolute_percentage_error(origin, new)
+        block_diff_1list["mape"] = stats.mean_absolute_percentage_error(origin, new).item()
     except Exception as e:
         block_diff_1list["log"].append("MAPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["mape"] = None
@@ -53,7 +53,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Compute Mean Squared Percentage Error between two values
     # TODO
     try:
-        block_diff_1list["mspe"] = stats.mean_squared_percentage_error(origin, new)        
+        block_diff_1list["mspe"] = stats.mean_squared_percentage_error(origin, new).item()        
     except Exception as e:
         block_diff_1list["log"].append("MSPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["mspe"] = None
@@ -61,7 +61,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test rmspe
     # Compute Root Mean Squared Percentage Error between two lists
     try:
-        block_diff_1list["rmspe"] = stats.root_mean_squared_percentage_error(origin, new)        
+        block_diff_1list["rmspe"] = stats.root_mean_squared_percentage_error(origin, new).item()        
     except Exception as e:
         block_diff_1list["log"].append("RMSPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["rmspe"] = None
@@ -69,7 +69,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test mpe
     # Compute Mean Percentage Error between two lists
     try:
-        block_diff_1list["mpe"] = stats.mean_percentage_error(origin, new)
+        block_diff_1list["mpe"] = stats.mean_percentage_error(origin, new).item()
     except Exception as e:
         block_diff_1list["log"].append("MPE Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["mpe"] = None
@@ -77,7 +77,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test rpd
     # Compute Relative Percentage Difference between two lists
     try:
-        block_diff_1list["rpd"] = stats.mean_relative_percentage_difference(origin, new)
+        block_diff_1list["rpd"] = stats.mean_relative_percentage_difference(origin, new).item()
     except Exception as e:
         block_diff_1list["log"].append("RPD Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["rpd"] = None
@@ -85,7 +85,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test nilsimsa
     # Compute Nilsimsa Distane between two lists
     try:
-        block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin, new)
+        block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin, new).item()
     except Exception as e:
         block_diff_1list["log"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["nilsimsa"] = None
