@@ -8,7 +8,7 @@ error_diff_types = ["type", "len"]
 
 
 def compute_1el_difference (origin, new):
-    return compute_1list_difference (np.array(origin, ndmin=1), np.array(new, ndmin=1))
+    return compute_1list_difference (np.array(origin, ndmin=1, dtype=float), np.array(new, ndmin=1, dtype=float))
 
 
 def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
@@ -36,7 +36,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     # Test string values
     # Compute Levenshtein distance percentage between two strings
     try:
-        block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new).item()
+        block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new)
     except Exception as e:
         block_diff_1list["log"].append("Levenshtein Stat: " + str("".join(traceback.format_exception(e))))
         block_diff_1list["levenshtein"] = None

@@ -28,7 +28,7 @@ def vcore (origin:np.ndarray, new:np.ndarray):
 
     return res
 
-def mean_levenshtein_distance_percentage (origin:np.ndarray, new:np.ndarray):
+def mean_levenshtein_distance_percentage (origin:np.ndarray, new:np.ndarray) -> float:
     n = min(len(origin), len(new))
     lev_max_scores = []
     # Compute Levenshtein maximum scores
