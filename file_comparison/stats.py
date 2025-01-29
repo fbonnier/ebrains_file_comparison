@@ -24,7 +24,7 @@ def core (origin, new):
 # (origin - new) / origin
 def vcore (origin:np.ndarray, new:np.ndarray):
     
-    res = np.divide (origin-new, origin, out=np.full_like(origin, np.nan), where=origin!=0, dtype=float)
+    res = np.divide (origin-new, origin, out=np.full_like(origin, np.nan), where=origin!=0, signature=float)
 
     return res
 
@@ -58,7 +58,7 @@ def mean_absolute_percentage_error(origin:np.ndarray, new:np.ndarray):
 # Compute Mean Squared Percentage Error between two values
 def mean_squared_percentage_error(origin:np.ndarray, new:np.ndarray):
     core = vcore(origin=origin, new=new)
-    core = np.square(core, where=core!=np.nan, out=np.full_like(core, np.nan), dtype=float)
+    core = np.square(core, where=core!=np.nan, out=np.full_like(core, np.nan), signature=float)
     return np.nanmean(core)*100.
 
 # RMSPE
@@ -87,7 +87,7 @@ def mean_percentage_error(origin:np.ndarray, new:np.ndarray):
 # Compute Mean Relative Percentage Difference between two lists
 def mean_relative_percentage_difference(origin:np.ndarray, new:np.ndarray):
 
-    core = np.divide (np.abs(origin - new), ((origin + new)/2), out=np.full_like(origin, np.nan), where=(((origin + new)/2)!=0), dtype=float)
+    core = np.divide (np.abs(origin - new), ((origin + new)/2), out=np.full_like(origin, np.nan), where=(((origin + new)/2)!=0), signature=float)
     return np.nanmean (core)*100.
     
 
