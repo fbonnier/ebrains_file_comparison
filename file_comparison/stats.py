@@ -24,7 +24,7 @@ def core (origin, new):
 # (origin - new) / origin
 def vcore (origin:np.ndarray, new:np.ndarray):
     
-    res = np.divide (origin-new, origin, out=np.full_like(origin, np.nan), where=origin!=0, signature=float)
+    res = np.divide (origin.astype(np.float64)-new.astype(np.float64), origin.astype(np.float64), out=np.full_like(origin.astype(np.float64), np.nan), where=origin!=0)
 
     return res
 
@@ -38,7 +38,7 @@ def mean_levenshtein_distance_percentage (origin:np.ndarray, new:np.ndarray) -> 
     distance_percentage = 0.
     for iel in range(n):
         distance_percentage += edit_distance(str(origin[iel]), str(new[iel]))*100./lev_max_scores[iel]
-    mean_distance_percentage = distance_percentage / n
+    mean_distance_percentage = distance_percentage / n if n else None
 
     return mean_distance_percentage
 
@@ -58,13 +58,13 @@ def mean_absolute_percentage_error(origin:np.ndarray, new:np.ndarray):
 # Compute Mean Squared Percentage Error between two values
 def mean_squared_percentage_error(origin:np.ndarray, new:np.ndarray):
     core = vcore(origin=origin, new=new)
-    core = np.square(core, where=core!=np.nan, out=np.full_like(core, np.nan), signature=float)
+    core = np.square(core, where=core!=np.nan, out=np.full_like(core, np.nan))
     return np.nanmean(core)*100.
 
 # RMSPE
 # Compute Root Mean Squared Percentage Error between two lists
 def root_mean_squared_percentage_error(origin:np.ndarray, new:np.ndarray):
-    return np.sqrt(mean_squared_percentage_error(origin=origin, new=new)/100.)*100.
+    return np.sqrt(mean_squared_percentage_error(origin=origin.astype(np.float64), new=new.astype(np.float64))/100.)*100.
 
 # MSE  
 # Compute Mean Squared Error between two lists
@@ -87,17 +87,17 @@ def mean_percentage_error(origin:np.ndarray, new:np.ndarray):
 # Compute Mean Relative Percentage Difference between two lists
 def mean_relative_percentage_difference(origin:np.ndarray, new:np.ndarray):
 
-    core = np.divide (np.abs(origin - new), ((origin + new)/2), out=np.full_like(origin, np.nan), where=(((origin + new)/2)!=0), signature=float)
+    core = np.divide (np.abs(origin.astype(np.float64) - new.astype(np.float64)), ((origin.astype(np.float64) + new.astype(np.float64))/2), out=np.full_like(origin, np.nan), where=(((origin.astype(np.float64) + new.astype(np.float64))/2)!=0))
     return np.nanmean (core)*100.
     
 
 # Compute mean difference between two datasets
 def delta (origin:np.ndarray, new:np.ndarray):
-    return np.mean(np.absolute(origin - new))
+    return np.mean(np.absolute(origin.astype(np.float64) - new.astype(np.float64)))
 
 # Compute maximum difference between two datasets
 def maximum_delta (origin:np.ndarray, new:np.ndarray):
-    return np.max(np.absolute(origin - new))
+    return np.max(np.absolute(origin.astype(np.float64) - new.astype(np.float64)))
 
 def mean_nilsimsa_distance(origin:np.ndarray, new:np.ndarray):
     nilsimsa_scores = np.full_like(origin, np.nan)
