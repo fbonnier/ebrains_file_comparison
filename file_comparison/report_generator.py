@@ -76,11 +76,12 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     
     # Test rpd
     # Compute Relative Percentage Difference between two lists
-    try:
-        block_diff_1list["rpd"] = stats.mean_relative_percentage_difference(origin, new).item()
-    except Exception as e:
-        block_diff_1list["log"].append("RPD Stat: " + str("".join(traceback.format_exception(e))))
-        block_diff_1list["rpd"] = None
+    # TO FIX
+    # try:
+    #     block_diff_1list["rpd"] = stats.mean_relative_percentage_difference(origin, new).item()
+    # except Exception as e:
+    #     block_diff_1list["log"].append("RPD Stat: " + str("".join(traceback.format_exception(e))))
+    #     block_diff_1list["rpd"] = None
             
     # Test nilsimsa
     # Compute Nilsimsa Distane between two lists

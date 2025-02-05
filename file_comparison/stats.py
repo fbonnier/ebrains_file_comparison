@@ -85,6 +85,7 @@ def mean_percentage_error(origin:np.ndarray, new:np.ndarray):
 
 # MRPD
 # Compute Mean Relative Percentage Difference between two lists
+# TO FIX
 def mean_relative_percentage_difference(origin:np.ndarray, new:np.ndarray):
 
     core = np.divide (np.abs(origin.astype(np.float64) - new.astype(np.float64), dtype=np.float64), ((origin.astype(np.float64) + new.astype(np.float64)).astype(np.float64)/2.), out=np.full_like(origin, np.nan), where=(((origin.astype(np.float64) + new.astype(np.float64))/2.)!=0))
