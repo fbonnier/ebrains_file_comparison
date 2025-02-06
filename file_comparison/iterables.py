@@ -122,7 +122,8 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         # Check array length
         if len(original_item) - len(new_item):
             block_diff["error"].append (comparison_path+str(type(original_item)) + ": Different size, missing data")
-            block_diff["nerrors"] += abs(len(original_item) - len(new_item))
+            block_diff["nerrors"] += 1
+            block_diff["ndiff"] += abs(len(original_item) - len(new_item))
 
         for id_ilist in range(min(len(original_item), len(new_item))):
             block_diff = iterable_are_equal (original_item[id_ilist], new_item[id_ilist], comparison_path+str(type(original_item))+"->", block_diff)
@@ -190,6 +191,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         # if values are not equal
         if (original_item != new_item):
             block_delta = file_comparison.report_generator.compute_1el_difference (original_item, new_item)
+            block_diff["ndiff"] += 1
             block_diff["report"].append(block_delta)
         
     return block_diff

@@ -73,7 +73,7 @@ def extract_neo_block (block, path, data):
         extract_neo_segment (block.segments[isegment_idx], path + "->segment[" + str(isegment_idx) + "]", data)
 
     for igroup_idx in range(len(block.groups)):
-        extract_neo_group (neoblock1.groups[igroup_idx], neoblock2.groups[igroup_idx], path + "->group[" + str(igroup_idx) + "]")
+        extract_neo_group (block.groups[igroup_idx], neoblock2.groups[igroup_idx], path + "->group[" + str(igroup_idx) + "]")
 
 def extract_neo_group (group, path, data):
 
@@ -102,7 +102,7 @@ def extract_neo_segment (segment, path, data):
         # print (path + "->channelview")
         # print (segment1.channelview)
         for ivar_idx in range(len(segment.channelview)):
-            dara[str(path+str("->channelview[" + str(ivar_idx) + "]") + "->")] = segment.channelview[ivar_idx]
+            data[str(path+str("->channelview[" + str(ivar_idx) + "]") + "->")] = segment.channelview[ivar_idx]
     except Exception as e:
         print (type(segment.channelview))
         print (type(segment))
@@ -124,19 +124,19 @@ def extract_neo_segment (segment, path, data):
 
     try:
     #     print (path + "->spiketrains")
-        for ivar_idx in range(len(segment1.spiketrains)):
+        for ivar_idx in range(len(segment.spiketrains)):
             data[str(path+str("->spiketrains[" + str(ivar_idx) + "]") + "->")] = segment.spiketrains[ivar_idx]
     except Exception as e:
         print ("Error Neo :: " + str(e))
 
     try:
-        for ivar_idx in range(len(segment1.events)):
+        for ivar_idx in range(len(segment.events)):
             data[str(path+str("->events[" + str(ivar_idx) + "]") + "->")] = segment.events[ivar_idx]
     except Exception as e:
         print ("Error Neo :: " + str(e))
 
     try:
-        for ivar_idx in range(len(segment1.epochs)):
+        for ivar_idx in range(len(segment.epochs)):
             data[str(path+str("->epochs[" + str(ivar_idx) + "]") + "->")] = segment.epochs[ivar_idx]
     except Exception as e:
         print ("Error Neo :: " + str(e))
@@ -152,6 +152,7 @@ def compare_segments (original_segment, new_segment, path, block_diff):
             if len(original_segment.channelview) != len(new_segment.channelview):
                 block_diff["error"].append (path + " channelview are not the same size")
                 block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_segment.channelview) - len(new_segment.channelview))
                 block_diff["log"].append (path + " channelview are not the same size")
               
             for ivar_idx in range(min(len(original_segment.channelview), len(new_segment.channelview))):
@@ -165,6 +166,7 @@ def compare_segments (original_segment, new_segment, path, block_diff):
             if len(original_segment.analogsignals) != len(new_segment.analogsignals):
                 block_diff["error"].append (path + " analogsignals are not the same size")
                 block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_segment.analogsignals) - len(new_segment.analogsignals))
                 block_diff["log"].append (path + " analogsignals are not the same size")
 
             for ivar_idx in range(min(len(original_segment.analogsignals), len(new_segment.analogsignals))):
@@ -178,6 +180,7 @@ def compare_segments (original_segment, new_segment, path, block_diff):
             if len(original_segment.irregularlysampledsignals) != len(new_segment.irregularlysampledsignals):
                 block_diff["error"].append (path + " irregularlysampledsignals are not the same size")
                 block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_segment.irregularlysampledsignals) - len(new_segment.irregularlysampledsignals))
                 block_diff["log"].append (path + " irregularlysampledsignals are not the same size")
 
             for ivar_idx in range(min(len(original_segment.irregularlysampledsignals), len(new_segment.irregularlysampledsignals))):
@@ -192,6 +195,7 @@ def compare_segments (original_segment, new_segment, path, block_diff):
             if len(original_segment.spiketrains) != len(new_segment.spiketrains):
                 block_diff["error"].append (path + " spiketrains are not the same size")
                 block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_segment.spiketrains) - len(new_segment.spiketrains))
                 block_diff["log"].append (path + " spiketrains are not the same size")
 
             for ivar_idx in range(min(len(original_segment.spiketrains), len(new_segment.spiketrains))):
@@ -205,6 +209,7 @@ def compare_segments (original_segment, new_segment, path, block_diff):
             if len(original_segment.events) != len(new_segment.events):
                 block_diff["error"].append (path + " events are not the same size")
                 block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_segment.events) - len(new_segment.events))
                 block_diff["log"].append (path + " events are not the same size")
 
             for ivar_idx in range(min(len(original_segment.events), len(new_segment.events))):
@@ -218,6 +223,7 @@ def compare_segments (original_segment, new_segment, path, block_diff):
             if len(original_segment.epochs) != len(new_segment.epochs):
                 block_diff["error"].append (path + " epochs are not the same size")
                 block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_segment.epochs) - len(new_segment.epochs))
                 block_diff["log"].append (path + " epochs are not the same size")
 
             for ivar_idx in range(min(len(original_segment.epochs), len(new_segment.epochs))):
@@ -234,6 +240,7 @@ def compare_groups (original_group, new_group, path, block_diff):
     if len(original_group.groups) != len(new_group.groups):
         block_diff["error"].append (path + " group have different number of groups")
         block_diff["nerrors"] += 1
+        block_diff["ndiff"] += abs(len(original_group.groups) - len(new_group.groups))
         block_diff["log"].append (path + " group have different number of groups")
 
     for igroup_idx in range(min(len(original_group.groups, new_group.groups))):
@@ -249,6 +256,7 @@ def compare_neo_blocks (original_block, new_block, path, block_diff):
     if len(original_block.segments) != len(new_block.segments):
         block_diff["error"].append (path + " block have different number of segments")
         block_diff["nerrors"] += 1
+        block_diff["ndiff"] += abs(len(original_block.segments) - len(new_block.segments))
         block_diff["log"].append (path + " block have different number of segments")
 
     for isegment_idx in range(min (len(original_block.segments), len(new_block.segments))):
@@ -258,6 +266,7 @@ def compare_neo_blocks (original_block, new_block, path, block_diff):
     if len(original_block.groups) != len(new_block.groups):
         block_diff["error"].append (path + " block have different number of groups")
         block_diff["nerrors"] += 1
+        block_diff["ndiff"] += abs(len(original_block.groups) - len(new_block.groups))
         block_diff["log"].append (path + " block have different number of groups")
         
     for igroup_idx in range(min (len(original_block.groups), len(new_block.groups))):
@@ -267,7 +276,7 @@ def compare_neo_blocks (original_block, new_block, path, block_diff):
 
 
 def compute_differences_report (original_file, new_file):
-    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "log": [], "error": []}
+    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, 'ndiff': 0, "log": [], "error": []}
     comparison_path = "R"
     try:
         original_neo_reader = neo.io.get_io(original_file["path"])
@@ -279,6 +288,7 @@ def compute_differences_report (original_file, new_file):
         if len(original_blocks) != len(new_blocks):
             block_diff["error"].append ("NEO Error:" + original_file["path"] + " and " + new_file["path"] + " do not have the same number of neo:blocks")
             block_diff["nerrors"] += 1
+            block_diff["ndiff"] += abs(len(original_blocks) - len(new_blocks))
             block_diff["log"].append ("NEO Warning: Number of blocks are not equal: not all blocks will be compared" )
 
         for iblock_idx in range(min(len(original_blocks), len(new_blocks))):
