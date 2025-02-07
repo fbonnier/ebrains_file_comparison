@@ -116,7 +116,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
 
     #############   NUMPY.arrays  #################
     # Convert numpy arrays into compatible arrays
-    elif ((type(original_item) == np.ndarray) and (type(new_item) == np.ndarray)):
+    elif ((isinstance(original_item, np.ndarray)) and (isinstance(new_item, np.ndarray))):
         # print ("iterable_are_equal Numpy Array")
                 
         # Check array length
@@ -146,19 +146,20 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
 
 
         # print ("iterable_are_equal Iterable type")
-        #################   LIST    ###################
-        if (((type(original_item) == list) and (type(new_item) == list)) or ((type(original_item) == tuple) and (type(new_item) == tuple))):
+        #################   LIST  & TUPLE  ###################
+        if (((isinstance(original_item, list)) and (isinstance(new_item, list))) or ((isinstance(original_item, tuple)) and (isinstance(new_item, tuple)))):
             # Check array length
             if len(original_item) - len(new_item):
                 block_diff["error"].append (comparison_path+str(type(original_item)) + ": Different size, missing data")
-                block_diff["nerrors"] += abs(len(original_item) - len(new_item))
+                block_diff["nerrors"] += 1
+                block_diff["ndiff"] += abs(len(original_item) - len(new_item))
             
             for id_ilist in range(min(len(original_item), len(new_item))):
                 block_diff = iterable_are_equal (original_item[id_ilist], new_item[id_ilist], comparison_path+str(type(original_item))+"->", block_diff)
             
         #################   DICT    ###################
         # Check if original_item and new_item provide keys to check keys
-        elif ((type(original_item) == dict) and (type(new_item) == dict)):
+        elif ((isinstance(original_item, dict)) and (isinstance(new_item, dict))):
             block_diff = compare_dicts (original_item, new_item, comparison_path+str(type(original_item))+"->", block_diff)
         else:
             block_diff["error"].append(comparison_path+str(type(original_item)) + " iterable not supported")
