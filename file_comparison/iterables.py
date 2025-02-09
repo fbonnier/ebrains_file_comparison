@@ -154,29 +154,20 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         # Check if original_item and new_item provide keys to check keys
         elif ((isinstance(original_item, dict)) and (isinstance(new_item, dict))):
             block_diff = compare_dicts (original_item, new_item, comparison_path+str(type(original_item))+"->", block_diff)
+        
+        #################   WORD (STR)    ###################
+        # Check if original_item and new_item are strings        
+        elif (isinstance(original_item, str) and isinstance(new_item, str)):
+            block_diff["nvalues"] += 1
+            # if values are not equal
+            if (original_item != new_item):
+                block_delta = file_comparison.report_generator.compute_1el_difference (original_item, new_item)
+                block_diff["report"].append(block_delta)
+                    
         else:
             block_diff["error"].append(comparison_path+str(type(original_item)) + " iterable not supported")
             block_diff["nerrors"] += 1
         
-        
-    #################   WORD (STR)    ###################
-    # Check if original_item and new_item are strings corresponding to float or complex numbers. original_item and new_item are words, without space        
-    elif (type(original_item)==str) and (type(new_item)==str):
-        try:
-            original_item_val = float(original_item)
-            new_item_val = float(new_item)
-            block_diff = iterable_are_equal (original_item_val, new_item_val, comparison_path+str(type(original_item_val))+"->", block_diff)
-        except ValueError:
-            try:
-                original_item_val = complex(original_item)
-                new_item_val = complex(new_item)
-                block_diff = iterable_are_equal (original_item_val, new_item_val, comparison_path+str(type(original_item_val))+"->", block_diff)
-            except ValueError:
-                block_diff["nvalues"] += 1
-                # if values are not equal
-                if (original_item != new_item):
-                    block_delta = file_comparison.report_generator.compute_1el_difference (original_item, new_item)
-                    block_diff["report"].append(block_delta)
             
 
     # If original_item and new_item are not iterable (are values)
