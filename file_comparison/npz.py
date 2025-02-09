@@ -1,6 +1,7 @@
 # Numpy
 import numpy as np
 
+from collections.abc import Iterable
 import file_comparison.report_generator
 import file_comparison.iterables
 import traceback
@@ -9,25 +10,30 @@ import traceback
 # Compare Numpy Arrays
 def compare_numpy_arrays (original_item, new_item, comparison_path, block_diff):
 
-    # Check sizes
-    if (len(original_item) - len(new_item)):
-        block_diff["error"].append(comparison_path+str(type(original_item)) + ": Different size, missing data")
-        block_diff["nerrors"] += abs(len(original_item) - len(new_item))
+    # Check array length
+    if len(original_item) - len(new_item):
+        block_diff["error"].append (comparison_path+str(type(original_item)) + ": Different size, missing data")
+        block_diff["nerrors"] += 1
+        block_diff["ndiff"] += abs(len(original_item) - len(new_item))
 
     # Check type similar
     if (original_item.dtype != new_item.dtype):
         block_diff["error"].append(comparison_path+str(type(original_item)) + ": Different data types")
-        block_diff["nerrors"] += abs(len(original_item))
+        block_diff["nerrors"] += 1
     
     # Compare values
-    if (original_item.dtype != object and new_item.dtype != object):
+    if (isinstance(original_item.dtype, Iterable) and isinstance(new_item.dtype, Iterable)):
         
-        block_diff["report"].append(file_comparison.report_generator.compute_1list_difference(origin=original_item, new=new_item))
-        
-        block_diff["nvalues"] += min(len(original_item), len(new_item))
-    else:
         for iel in range(min(len(original_item), len(new_item))):
-            block_diff = file_comparison.iterables.iterable_are_equal (original_item[iel], new_item[iel], comparison_path+str(type(original_item))+"->", block_diff)
+            block_diff = file_comparison.iterables.iterable_are_equal (\
+                original_item[iel],\
+                new_item[iel],\
+                comparison_path+str(type(original_item))+"->",\
+                block_diff)
+    else:
+        block_diff["report"].append(file_comparison.report_generator.compute_1list_difference(origin=original_item, new=new_item))
+        block_diff["nvalues"] += min(len(original_item), len(new_item))
+        
     
 
     return block_diff
@@ -84,9 +90,6 @@ def compute_differences_report (original_file, new_file):
         new_data = np.load(new_file["path"], allow_pickle=new_file["allow_pickle"], encoding=new_file["encoding"])
 
         block_diff = file_comparison.iterables.iterable_are_equal (original_data, new_data, comparison_path, block_diff)
-        # print (block_diff)
-        # print ("\n")
-
     except Exception as e:
         block_diff["error"].append("NPZ compute_differences_report: " + str("".join(traceback.format_exception(e))))
         block_diff["nerrors"] += 1

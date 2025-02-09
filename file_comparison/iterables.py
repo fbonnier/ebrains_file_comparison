@@ -117,14 +117,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
     #############   NUMPY.arrays  #################
     # Convert numpy arrays into compatible arrays
     elif ((isinstance(original_item, np.ndarray)) and (isinstance(new_item, np.ndarray))):
-        # print ("iterable_are_equal Numpy Array")
                 
-        # Check array length
-        if len(original_item) - len(new_item):
-            block_diff["error"].append (comparison_path+str(type(original_item)) + ": Different size, missing data")
-            block_diff["nerrors"] += 1
-            block_diff["ndiff"] += abs(len(original_item) - len(new_item))
-
         for id_ilist in range(min(len(original_item), len(new_item))):
             block_diff = iterable_are_equal (original_item[id_ilist], new_item[id_ilist], comparison_path+str(type(original_item))+"->", block_diff)
 

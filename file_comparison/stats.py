@@ -24,7 +24,7 @@ def core (origin, new):
 # (origin - new) / origin
 def vcore (origin:np.ndarray, new:np.ndarray):
     
-    res = np.divide (origin.astype(np.float64)-new.astype(np.float64), origin.astype(np.float64), out=np.full_like(origin.astype(np.float64), np.nan), where=origin!=0)
+    res = np.divide (origin - new, origin, out=np.full_like(origin, np.nan), where=origin!=0)
 
     return res
 
@@ -64,7 +64,7 @@ def mean_squared_percentage_error(origin:np.ndarray, new:np.ndarray):
 # RMSPE
 # Compute Root Mean Squared Percentage Error between two lists
 def root_mean_squared_percentage_error(origin:np.ndarray, new:np.ndarray):
-    return np.sqrt(mean_squared_percentage_error(origin=origin.astype(np.float64), new=new.astype(np.float64))/100.)*100.
+    return np.sqrt(mean_squared_percentage_error(origin=origin, new=new)/100.)*100.
 
 # MSE  
 # Compute Mean Squared Error between two lists
@@ -88,23 +88,37 @@ def mean_percentage_error(origin:np.ndarray, new:np.ndarray):
 # TO FIX
 def mean_relative_percentage_difference(origin:np.ndarray, new:np.ndarray):
 
-    core = np.divide (np.abs(origin.astype(np.float64) - new.astype(np.float64), dtype=np.float64).astype(np.float64), ((origin.astype(np.float64) + new.astype(np.float64)).astype(np.float64)/2.).astype(np.float64), out=np.full_like(origin, np.nan), where=(((origin.astype(np.float64) + new.astype(np.float64))/2.)!=0))
+    core = np.divide (np.abs(origin - new), ((origin + new)/2.), out=np.full_like(origin, np.nan), where=(((origin + new)/2.)!=0))
     
     return np.nanmean (core)*100.
     
 
 # Compute mean difference between two datasets
 def delta (origin:np.ndarray, new:np.ndarray):
-    return np.mean(np.absolute(origin.astype(np.float64) - new.astype(np.float64)))
+    return np.mean(np.absolute(origin - new))
 
 # Compute maximum difference between two datasets
 def maximum_delta (origin:np.ndarray, new:np.ndarray):
-    return np.max(np.absolute(origin.astype(np.float64) - new.astype(np.float64)))
+    return np.max(np.absolute(origin - new))
 
+# Compute nilsimsa distance between two strings
 def mean_nilsimsa_distance(origin:np.ndarray, new:np.ndarray):
     nilsimsa_scores = np.full_like(origin, np.nan)
     for iel in range(min(len(origin), len(new))):
         nilsimsa_scores[iel] = nilsimsa_str(origin=str(origin[iel]), new=str(new[iel]))
 
     return np.nanmean(nilsimsa_scores)
-        
+
+# Count the number of value differences
+def count_diffs (origin:np.ndarray, new:np.ndarray):
+
+    ndiff = 0
+    error = []
+    for iel in range(min(len(origin), len(new))):
+        try:
+            if origin[iel] != new[iel]:
+                ndiff += 1
+        except Exception as e:
+            error.append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(e))))
+
+    return ndiff, error

@@ -251,9 +251,10 @@ class Method:
         ipair["differences"] = self.differences_report
         ipair["number_of_errors"] = len(self.errors)
         ipair["number_of_values"] = self.number_of_values
+        ipair["ndiff"] = self.ndiff
         
         ipair["mape_score"] = self.mape_score
-        ipair["rmse_score"] = self.rmse_score
+        # ipair["rmse_score"] = self.rmse_score
         ipair["rmspe_score"] = self.rmspe_score
         ipair["levenshtein_score"] = self.levenshtein_score
         ipair["mspe_score"] = self.mspe_score
@@ -262,8 +263,6 @@ class Method:
         
         ipair["max_delta"] = self.max_delta
         ipair["delta"] = self.delta
-        # ipair["mse_score"] = self.mse_score
-        # ipair["mse_score"] = self.mse_score
         # ipair["mse_score"] = self.mse_score
         ipair["quantity score"] = self.quantity_score
         ipair["hash score"] = self.hash_score
