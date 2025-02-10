@@ -13,10 +13,10 @@ def compute_1el_difference (origin, new):
 
 def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
  
-    block_diff_1list = {"origin": {"type": str(origin.dtype()), "value": origin.tolist()}, "new": {"type": str(new.dtype()), "value": new.tolist()}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
+    block_diff_1list = {"origin": {"type": str(origin.dtype), "value": origin.tolist()}, "new": {"type": str(new.dtype), "value": new.tolist()}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
 
     # If data is STRING, we can compute Levenshtein distance
-    if origin.dtype() == "str" and new.dtype() == "str":
+    if origin.dtype == "str" and new.dtype == "str":
         try:
             block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new)
         except Exception as e:
