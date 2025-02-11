@@ -86,7 +86,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
         # Test mpe
         # Compute Mean Percentage Error between two lists
         try:
-            block_diff_1list["mpe"] = stats.mean_percentage_error(origin, new).item()
+            block_diff_1list["mpe"] = stats.mean_percentage_error(origin.astype(np.float64), new.astype(np.float64)).item()
         except Exception as e:
             block_diff_1list["log"].append("MPE Stat: " + str("".join(traceback.format_exception(e))))
             block_diff_1list["mpe"] = None
@@ -108,7 +108,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
             block_diff_1list["error"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(e))))
             block_diff_1list["nilsimsa"] = None
 
-    _ndiff, _error = stats.count_diffs (origin=origin, new=new)
+    _ndiff, _error = stats.count_diffs (origin, new)
     block_diff_1list["ndiff"] += _ndiff
     block_diff_1list["error"].append(_error)
     block_diff_1list["quantity"] = max(len(origin), len(new)) - block_diff_1list["ndiff"]
