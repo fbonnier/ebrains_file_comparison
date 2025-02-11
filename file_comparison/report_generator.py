@@ -12,7 +12,16 @@ def compute_1el_difference (origin, new):
 
 
 def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
- 
+    
+    # Check if origin and new are numpy arrays
+    # If not, convert them
+    if not isinstance(origin, np.ndarray):
+        print("Origin is not numpy array, " + str(type(origin)))
+        origin = np.array(origin)
+    if not isinstance(new, np.ndarray):
+        print("New is not numpy array, " + str(type(new)))
+        new = np.array(new)
+    
     block_diff_1list = {"origin": {"type": str(origin.dtype), "value": origin.tolist()}, "new": {"type": str(new.dtype), "value": new.tolist()}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
 
     # If data is STRING, we can compute Levenshtein distance
@@ -108,6 +117,8 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
             block_diff_1list["error"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(e))))
             block_diff_1list["nilsimsa"] = None
 
+    # Test count_diffs
+    # Count the number of value differences
     _ndiff, _error = stats.count_diffs (origin, new)
     block_diff_1list["ndiff"] += _ndiff
     block_diff_1list["error"].append(_error)
