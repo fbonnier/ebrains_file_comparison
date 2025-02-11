@@ -117,14 +117,6 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
             block_diff_1list["error"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(e))))
             block_diff_1list["nilsimsa"] = None
 
-    # Check if origin and new are numpy arrays
-    # If not, convert them
-    if not isinstance(origin, np.ndarray):
-        print("Origin is not numpy array, " + str(type(origin)))
-        origin = np.array(origin)
-    if not isinstance(new, np.ndarray):
-        print("New is not numpy array, " + str(type(new)))
-        new = np.array(new)
     # Test count_diffs
     # Count the number of value differences
     _ndiff, _error = stats.count_diffs (origin, new)

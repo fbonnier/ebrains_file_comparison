@@ -111,6 +111,8 @@ def mean_nilsimsa_distance(origin:np.ndarray, new:np.ndarray):
 
 # Count the number of value differences
 def count_diffs (origin:np.ndarray, new:np.ndarray):
+    print(f"Entering count_diffs with origin type: {type(origin)}, shape: {origin.shape}")
+    print(f"Entering count_diffs with new type: {type(new)}, shape: {new.shape}")
 
     ndiff = 0
     error = []
