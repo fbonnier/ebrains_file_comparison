@@ -7,8 +7,8 @@ import traceback
 error_diff_types = ["type", "len"]
 
 
-def compute_1el_difference (origin, new):
-    return compute_1list_difference (np.array(origin), np.array(new))
+def compute_1el_difference (origin:np.ndarray, new:np.ndarray):
+    return compute_1list_difference (origin, new)
 
 
 def compute_1list_difference (origin:np.ndarray, new:np.ndarray):

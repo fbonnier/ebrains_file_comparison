@@ -64,7 +64,7 @@ def compare_lists (list1:list, list2:list, comparison_path: str, block_diff: dic
         for id_ilist in range(min(len(list1), len(list2))):
             block_diff = iterable_are_equal (list1[id_ilist], list2[id_ilist], comparison_path+str(type(list1))+"->", block_diff)
     else:
-        block_diff["report"].append(file_comparison.report_generator.compute_1list_difference(origin=list1, new=list2))
+        block_diff["report"].append(file_comparison.report_generator.compute_1list_difference(origin=np.array(list1), new=np.array(list2)))
     
     return block_diff
 
@@ -161,7 +161,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
             block_diff["nvalues"] += 1
             # if values are not equal
             if (original_item != new_item):
-                block_delta = file_comparison.report_generator.compute_1el_difference (original_item, new_item)
+                block_delta = file_comparison.report_generator.compute_1el_difference (np.array([original_item]), np.array([new_item]))
                 block_diff["report"].append(block_delta)
                     
         else:
@@ -175,7 +175,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         block_diff["nvalues"] += 1
         # if values are not equal
         if (original_item != new_item):
-            block_delta = file_comparison.report_generator.compute_1el_difference (original_item, new_item)
+            block_delta = file_comparison.report_generator.compute_1el_difference (np.array([original_item]), np.array([new_item]))
             block_diff["ndiff"] += 1
             block_diff["report"].append(block_delta)
         
