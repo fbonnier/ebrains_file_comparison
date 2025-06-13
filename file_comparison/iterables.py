@@ -116,7 +116,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
 
     #############   NUMPY.arrays  #################
     # Convert numpy arrays into compatible arrays
-    elif ((isinstance(original_item, np.ndarray)) and (isinstance(new_item, np.ndarray))):
+    elif ((isinstance(original_item, np.ndarray)) and (isinstance(new_item, np.ndarray)) and original_item.ndim and new_item.ndim):
                 
         for id_ilist in range(min(len(original_item), len(new_item))):
             block_diff = iterable_are_equal (original_item[id_ilist], new_item[id_ilist], comparison_path+str(type(original_item))+"->", block_diff)
