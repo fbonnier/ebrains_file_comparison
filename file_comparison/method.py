@@ -171,6 +171,10 @@ class Method:
             if idataset["delta"]: self.delta += idataset["delta"]
             if idataset["ndiff"]: self.ndiff += idataset["ndiff"]
 
+        if not self.number_of_values:
+            self.errors.append("Method.compute_score: No values to compute score")
+            return
+
         self.levenshtein_score += 100. * (self.number_of_values - self.ndiff)
         self.levenshtein_score = self.levenshtein_score / self.number_of_values
 
