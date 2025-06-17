@@ -29,53 +29,87 @@ def compute_ratio (score):
 
 def find_bijective (produced_outputs, expected_outputs):
 
-    # # All files scores
-    # all_file_scores = [[None for _ in expected_outputs] for _ in produced_outputs]
+    # All files scores
+    all_file_scores = [[{"partner": None, "score": 0} for _ in expected_outputs] for _ in produced_outputs]
 
-    # # Compute scores for all pairs of files
-    # for ifile1 in produced_outputs:
-    #     for ifile2 in expected_outputs:
-    #         all_file_scores[produced_outputs.index(ifile1)][expected_outputs.index(ifile2)] = compute_ratio(compare_digests(Nilsimsa(ifile1["filename"] + str(ifile1["size"])).hexdigest(), Nilsimsa(ifile2["filename"] + str(ifile2["size"])).hexdigest()))
+    # Compute scores for all pairs of files
+    for ifile1 in produced_outputs:
+        for ifile2 in expected_outputs:
+            all_file_scores[produced_outputs.index(ifile1)][expected_outputs.index(ifile2)]["score"] = compute_ratio(compare_digests(Nilsimsa(ifile1["filename"] + str(ifile1["size"])).hexdigest(), Nilsimsa(ifile2["filename"] + str(ifile2["size"])).hexdigest()))
+            all_file_scores[produced_outputs.index(ifile1)][expected_outputs.index(ifile2)]["partner"] = ifile2
 
-    # # Compute the maximum score for each produced file and check if it is bijective
+    # List of pairs of files to return
+    blocks_of_pairs = []
+
+    # Compute the maximum score for each produced file
+    for ifile1 in produced_outputs:
+        iproduced_max_score = {"partner": None, "score": 0}
+        # Search for the nearest partner
+        for ifile2 in expected_outputs:
+            new_score = all_file_scores[produced_outputs.index(ifile1)][expected_outputs.index(ifile2)]["score"]
+            if iproduced_max_score["score"] < new_score:
+                iproduced_max_score["partner"] = ifile2
+                iproduced_max_score["score"] = new_score
+
+        ipartner_max_score = {"ipartner": None, "score": 0}
+        # Search for the nearest of the nearest
+        for ipartner in produced_outputs:
+            best_score_ipartner = all_file_scores[produced_outputs.index(ipartner)][expected_outputs.index(iproduced_max_score["partner"])]["score"]
+            if ipartner_max_score["score"] < best_score_ipartner:
+                ipartner_max_score["ipartner"] = ipartner
+                ipartner_max_score["score"] = best_score_ipartner
+
+        # If the maximum score is the same for both produced and expected files, then we have a bijective pair
+        # and we can build a block of pairs
+        if ipartner_max_score["score"] == iproduced_max_score["score"] and ipartner_max_score["ipartner"] == ifile1:
+            block = {"Origin": None, "New": None, "hash score": None, "format": None, "error": [], "method": None, "log":[], "advice": [], "score": []}
+            block["Origin"] = iproduced_max_score["partner"]
+            block["Origin"]["origin"] = "expected"
+            block["New"] = ifile1
+            block["New"]["origin"] = "produced"
+            block["bijective score"] = ipartner_max_score["score"]*100
+            print("Found bijective pair: " + str(block["Origin"]["filename"]) + " <-> " + str(block["New"]["filename"]) + " with score: " + str(block["bijective score"]))
+            
+            # Compare file formats
+            
+            format_block = are_same_file_format (ifile1, ipartner_max_score["partner"])
+            if format_block["format score"]:
+                block["format"] = format_block["format"][0]
+            else:
+                block["format"] = format_block["format"]
+                block["error"].append(format_block["format error"])
+
+            blocks_of_pairs.append(block)
+        else:
+            print("No bijective pair found for: " + str(ifile1["filename"]) + " partnered with " + str(iproduced_max_score["partner"]["filename"]) + " has better candidate")
+  
+  ################################################################################################
+
+    # # Walk the files and build blocks of pairs
+    # blocks_of_pairs = [] 
     # for ifile1 in produced_outputs:
     #     partner = {"ifile2": None, "score": 0}
     #     # Search for nearest partner
     #     for ifile2 in expected_outputs:
-    #         new_score = all_file_scores[produced_outputs.index(ifile1)][expected_outputs.index(ifile2)]
+    #         new_score = compute_ratio(compare_digests(Nilsimsa(ifile1["filename"] + str(ifile1["size"])).hexdigest(), Nilsimsa(ifile2["filename"] + str(ifile2["size"])).hexdigest()))
     #         if partner["score"] < new_score:
-    #             # Search for the nearest of the nearest
-    #             for ifile3 in produced_outputs:
-    #                 best_score_ifile2 = all_file_scores[produced_outputs.index(ifile3)][expected_outputs.index(ifile2)]
-    #                 if best_score_ifile2 == new_score:
     #             partner["ifile2"] = ifile2
-    #             partner["score"] = new_score 
+    #             partner["score"] = new_score
+    #     block = {"Origin": None, "New": None, "hash score": None, "format": None, "error": [], "method": None, "log":[], "advice": [], "score": []}
+    #     block["Origin"] = partner["ifile2"]
+    #     block["Origin"]["origin"] = "expected"
+    #     block["New"] = ifile1
+    #     block["New"]["origin"] = "produced"
+    #     block["bijective score"] = partner["score"]*100
 
-    # Walk the files and build blocks of pairs
-    blocks_of_pairs = [] 
-    for ifile1 in produced_outputs:
-        partner = {"ifile2": None, "score": 0}
-        # Search for nearest partner
-        for ifile2 in expected_outputs:
-            new_score = compute_ratio(compare_digests(Nilsimsa(ifile1["filename"] + str(ifile1["size"])).hexdigest(), Nilsimsa(ifile2["filename"] + str(ifile2["size"])).hexdigest()))
-            if partner["score"] < new_score:
-                partner["ifile2"] = ifile2
-                partner["score"] = new_score
-        block = {"Origin": None, "New": None, "hash score": None, "format": None, "error": [], "method": None, "log":[], "advice": [], "score": []}
-        block["Origin"] = partner["ifile2"]
-        block["Origin"]["origin"] = "expected"
-        block["New"] = ifile1
-        block["New"]["origin"] = "produced"
-        block["bijective score"] = partner["score"]*100
+    #     # Compare file formats
+    #     format_block = are_same_file_format (ifile1, partner["ifile2"])
+    #     if format_block["format score"]:
+    #         block["format"] = format_block["format"][0]
+    #     else:
+    #         block["format"] = format_block["format"]
+    #         block["error"].append(format_block["format error"])
 
-        # Compare file formats
-        format_block = are_same_file_format (ifile1, partner["ifile2"])
-        if format_block["format score"]:
-            block["format"] = format_block["format"][0]
-        else:
-            block["format"] = format_block["format"]
-            block["error"].append(format_block["format error"])
-
-        blocks_of_pairs.append(block)
+    #     blocks_of_pairs.append(block)
 
     return blocks_of_pairs
