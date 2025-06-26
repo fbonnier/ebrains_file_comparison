@@ -51,17 +51,17 @@ def find_bijective (produced_outputs, expected_outputs):
                 iproduced_max_score["partner"] = ifile2
                 iproduced_max_score["score"] = new_score
 
-        ipartner_max_score = {"ipartner": None, "score": 0}
+        ipartner_max_score = {"partner": None, "score": 0}
         # Search for the nearest of the nearest
         for ipartner in produced_outputs:
             best_score_ipartner = all_file_scores[produced_outputs.index(ipartner)][expected_outputs.index(iproduced_max_score["partner"])]["score"]
             if ipartner_max_score["score"] < best_score_ipartner:
-                ipartner_max_score["ipartner"] = ipartner
+                ipartner_max_score["partner"] = ipartner
                 ipartner_max_score["score"] = best_score_ipartner
 
         # If the maximum score is the same for both produced and expected files, then we have a bijective pair
         # and we can build a block of pairs
-        if ipartner_max_score["score"] == iproduced_max_score["score"] and ipartner_max_score["ipartner"] == ifile1:
+        if ipartner_max_score["score"] == iproduced_max_score["score"] and ipartner_max_score["partner"] == ifile1:
             block = {"Origin": None, "New": None, "hash score": None, "format": None, "error": [], "method": None, "log":[], "advice": [], "score": []}
             block["Origin"] = iproduced_max_score["partner"]
             block["Origin"]["origin"] = "expected"
