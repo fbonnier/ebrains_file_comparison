@@ -68,8 +68,8 @@ def find_bijective (produced_outputs, expected_outputs):
             block["New"] = ifile1
             block["New"]["origin"] = "produced"
             block["bijective score"] = ipartner_max_score["score"]*100
-            print("Found bijective pair: " + str(block["Origin"]["filename"]) + " <-> " + str(block["New"]["filename"]) + " with score: " + str(block["bijective score"]))
-            
+            print("Found bijective pair: " + str(block["Origin"]["filename"]) + " <-> " + str(block["New"]["filename"]) + " with score: " + str(block["bijective score"]) + "%")
+
             # Compare file formats
             
             format_block = are_same_file_format (ifile1, ipartner_max_score["partner"])

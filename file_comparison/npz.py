@@ -5,6 +5,7 @@ from collections.abc import Iterable
 import file_comparison.report_generator
 import file_comparison.iterables
 import traceback
+from copy import deepcopy
 
 
 # Compare Numpy Arrays
@@ -64,7 +65,7 @@ def compare_numpy_npz (original_item, new_item, comparison_path, block_diff):
 
     # Iterate on keys
     for ivar in common_keys:
-        block_diff = file_comparison.iterables.iterable_are_equal(original_item[ivar], new_item[ivar], comparison_path+str(type(original_item))+"->"+str(ivar)+"->", block_diff)
+        block_diff = file_comparison.iterables.iterable_are_equal(deepcopy(original_item[ivar]), deepcopy(new_item[ivar]), comparison_path+str(type(original_item))+"->"+str(ivar)+"->", block_diff)
     return block_diff
 
 
