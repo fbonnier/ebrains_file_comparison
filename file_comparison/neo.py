@@ -4,48 +4,6 @@ import neo.io
 import file_comparison.report_generator as rg
 
 
-
-
-# class NeoCompare:
-
-#     file1 = None
-#     file2 = None
-#     data_file1 = {}
-#     data_file2 = {}
-#     differences = {}
-#     missing_data = {}
-
-#     def __init__(self, file1, file2):
-#         self.file1 = file1
-#         self.file2 = file2
-#         # 1. Check files are supported
-#         if check_file_formats (file1) and check_file_formats (file2):
-
-#             # 2. Extract all raw data
-#             extract_neo_data (file1, self.data_file1)
-#             extract_neo_data (file2, self.data_file2)
-
-#     def __compute_scores__ (self):
-#         pass
-
-
-#     # Root Mean Squared Error
-#     def rmse (self, prod, expect):
-#         self.rmse_score = sqrt(mean_squared_error(prod, expect))
-#         return self.rmse_score
-
-#     # Mean Squared Error
-#     def mse (self, prod, expect):
-#         prod, expect = np.array(prod), np.array(expect)
-#         self.mse_score = np.square(np.subtract(prod, expect)).mean()
-#         return self.mse_score
-
-#     # Mean Absolute Percentage Error
-#     def mape (self, prod, expect):
-#         prod, expect = np.array(prod), np.array(expect)
-#         self.mape_score = np.mean(np.abs((prod - expect) / prod)) * 100
-#         return self.mape_score
-
 def compute_score (number_of_errors, number_of_values):
     score = 100. - (number_of_errors*100./number_of_values)
     return (score)
