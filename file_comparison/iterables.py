@@ -9,7 +9,7 @@ import file_comparison.report_generator
 import file_comparison.neo
 import file_comparison.npz
 
-known_types = [np.lib.npyio.NpzFile, np.ndarray, neo.core.block.Block, neo.core.Segment, str, bytes, np.byte, np.ubyte, np.short, np.ushort, list, tuple, dict, bool, np.bool_, float, np.float64, np.half, np.single, np.double, np.longdouble, np.csingle, np.cdouble, np.clongdouble, int, np.intc, np.uintc, np.int_, np.uint, np.longlong, np.ulonglong, neo.core.spiketrain.SpikeTrain, neo.core.analogsignal.AnalogSignal]
+known_types = [np.lib.npyio.NpzFile, np.ndarray, neo.core.block.Block, neo.core.Segment, str, bytes, np.byte, np.ubyte, np.short, np.ushort, list, tuple, dict, bool, np.bool_, float, np.float64, np.half, np.single, np.double, np.longdouble, np.csingle, np.cdouble, np.clongdouble, int, np.intc, np.uintc, np.int_, np.uint, np.longlong, np.ulonglong, np.str_, neo.core.spiketrain.SpikeTrain, neo.core.analogsignal.AnalogSignal]
 
 container_types = [np.lib.npyio.NpzFile, np.ndarray, neo.core.block.Block, neo.core.Segment, list, dict, neo.core.spiketrain.SpikeTrain, neo.core.analogsignal.AnalogSignal]
 
