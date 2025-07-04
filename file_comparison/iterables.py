@@ -121,7 +121,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         
         if original_item.ndim and new_item.ndim:
             for id_ilist in range(min(len(original_item), len(new_item))):
-                print (comparison_path+str(type(original_item)) + "[" + original_item.ndim + "]" +"->" + original_item[id_ilist] + " " + str(type(original_item[id_ilist])))
+                print (comparison_path+str(type(original_item)) + "[" + str(original_item.ndim) + "]" +"->" + str(original_item[id_ilist]) + " " + str(type(original_item[id_ilist])))
                 block_diff = iterable_are_equal (original_item[id_ilist], new_item[id_ilist], comparison_path+str(type(original_item))+"->", block_diff)
         # If original_item and new_item are scalars
         else:
@@ -186,7 +186,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
             block_diff["ndiff"] += 1
             block_diff["report"].append(block_delta)
         else:
-            print (original_item + " and " + new_item + " are equal")
+            print (str(original_item) + " and " + str(new_item) + " are equal")
 
         
     return block_diff
