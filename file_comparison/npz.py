@@ -69,7 +69,7 @@ def compare_numpy_npz (original_item, new_item, comparison_path, block_diff):
     # Iterate on keys
     for ivar in common_keys:
         print ("NPZ compare_numpy_npz: " + str(original_item[ivar]) + str(type(original_item[ivar])))
-        block_diff = file_comparison.iterables.iterable_are_equal(original_item[ivar], new_item[ivar], comparison_path+str(type(original_item))+"->"+str(ivar)+"->", block_diff)
+        block_diff = file_comparison.iterables.iterable_are_equal(np.asarray(original_item[ivar]), np.asarray(new_item[ivar]), comparison_path+str(type(original_item))+"->"+str(ivar)+"->", block_diff)
     return block_diff
 
 
@@ -94,7 +94,7 @@ def compute_differences_report (original_file, new_file):
         original_data = np.load(original_file["path"], allow_pickle=original_file["allow_pickle"], encoding=original_file["encoding"])
         new_data = np.load(new_file["path"], allow_pickle=new_file["allow_pickle"], encoding=new_file["encoding"])
 
-        block_diff = file_comparison.iterables.iterable_are_equal (np.asarray(original_data, copy=None), np.asarray(new_data, copy=None), comparison_path, block_diff)
+        block_diff = file_comparison.iterables.iterable_are_equal (original_data, new_data, comparison_path, block_diff)
     except Exception as e:
         block_diff["error"].append("NPZ compute_differences_report: " + str("".join(traceback.format_exception(e))))
         block_diff["nerrors"] += 1
