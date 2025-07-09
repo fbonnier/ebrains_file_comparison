@@ -63,8 +63,12 @@ def compare_numpy_npz (original_item, new_item, comparison_path, block_diff):
         block_diff["nerrors"] += len(keys_to_avoid)
         block_diff["nvalues"] += len(keys_to_avoid)
 
+    print ("NPZ compare_numpy_npz: " + str(comparison_path+str(type(original_item))+"->KeysAvoided") + str( keys_to_avoid))
+    print ("NPZ compare_numpy_npz: " + str(comparison_path+str(type(original_item))+"->CommonKeys") + str( common_keys))
+
     # Iterate on keys
     for ivar in common_keys:
+        print ("NPZ compare_numpy_npz: " + str(original_item[ivar]) + str(type(original_item[ivar])))
         block_diff = file_comparison.iterables.iterable_are_equal(original_item[ivar], new_item[ivar], comparison_path+str(type(original_item))+"->"+str(ivar)+"->", block_diff)
     return block_diff
 
