@@ -39,37 +39,19 @@ def compare_numpy_arrays (original_item, new_item, comparison_path, block_diff):
 
     return block_diff
 
-def compare_numpy_npz (original_item, new_item, comparison_path, block_diff):
+def compare_numpy_npz (original_desc, new_desc, comparison_path, block_diff):
 
-    keys_to_avoid = []
-    common_keys = []
+    try:
+        original_data = np.load(original_desc["path"], allow_pickle=original_desc["allow_pickle"], encoding=original_desc["encoding"])
+        new_data = np.load(new_desc["path"], allow_pickle=new_desc["allow_pickle"], encoding=new_desc["encoding"])
 
-    # Check keys_to_avoid# # TODO
-    for ikey in original_item.files:
-        if not ikey in new_item.files:
-            keys_to_avoid.append(ikey)
-        elif not ikey in common_keys:
-            common_keys.append(ikey)
+        block_diff = file_comparison.iterables.compare_dicts(original_data, new_data, comparison_path+str(type(original_data))+"->", block_diff)
 
-    for ikey in new_item.files:
-        if not ikey in original_item.files:
-            keys_to_avoid.append(ikey)
-        elif not ikey in common_keys:
-            common_keys.append(ikey)
+    except Exception as e:
+        block_diff["error"].append("NPZ compare_numpy_npz: " + str("".join(traceback.format_exception(e))))
+        block_diff["nerrors"] += 1
+        print ("NPZ compare_numpy_npz: " + str("".join(traceback.format_exception(e))))
 
-    # common_keys = original_item.files - keys_to_avoid
-    if len(keys_to_avoid) > 0:
-        block_diff["error"].append(str(comparison_path+str(type(original_item))+"->KeysAvoided") + str( keys_to_avoid))
-        block_diff["nerrors"] += len(keys_to_avoid)
-        block_diff["nvalues"] += len(keys_to_avoid)
-
-    print ("NPZ compare_numpy_npz: " + str(comparison_path+str(type(original_item))+"->KeysAvoided") + str( keys_to_avoid))
-    print ("NPZ compare_numpy_npz: " + str(comparison_path+str(type(original_item))+"->CommonKeys") + str( common_keys))
-
-    # Iterate on keys
-    for ivar in common_keys:
-        print ("NPZ compare_numpy_npz: " + str(original_item[ivar]) + str(type(original_item[ivar])))
-        block_diff = file_comparison.iterables.iterable_are_equal(np.asarray(original_item[ivar]), np.asarray(new_item[ivar]), comparison_path+str(type(original_item))+"->"+str(ivar)+"->", block_diff)
     return block_diff
 
 
@@ -91,10 +73,17 @@ def compute_differences_report (original_file, new_file):
     block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "log": [], "error": [], "ndiff": 0, "advice": []}
     comparison_path = new_file["path"]
     try:
-        original_data = np.load(original_file["path"], allow_pickle=original_file["allow_pickle"], encoding=original_file["encoding"])
-        new_data = np.load(new_file["path"], allow_pickle=new_file["allow_pickle"], encoding=new_file["encoding"])
+        if ((type(original_file["path"]) == np.lib.npyio.NpzFile) and (type(new_file["path"]) == np.lib.npyio.NpzFile)):
+        # print ("iterable_are_equal NPZ type")
+            block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
 
-        block_diff = file_comparison.iterables.iterable_are_equal (original_data, new_data, comparison_path, block_diff)
+        elif ((type(original_file["path"]) == np.lib.npyio.NpyFile) and (type(new_file["path"]) == np.lib.npyio.NpyFile)):
+        # print ("iterable_are_equal NPZ type")
+            # block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
+            print ("NPY files are not supported yet, please convert to NPZ")
+            block_diff["error"].append("NPY files are not supported yet, please convert to NPZ")
+            block_diff["nerrors"] += 1
+
     except Exception as e:
         block_diff["error"].append("NPZ compute_differences_report: " + str("".join(traceback.format_exception(e))))
         block_diff["nerrors"] += 1
