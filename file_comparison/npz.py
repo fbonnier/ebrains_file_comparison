@@ -73,16 +73,14 @@ def compute_differences_report (original_file, new_file):
     block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "log": [], "error": [], "ndiff": 0, "advice": []}
     comparison_path = new_file["path"]
     try:
-        if ((type(original_file["path"]) == np.lib.npyio.NpzFile) and (type(new_file["path"]) == np.lib.npyio.NpzFile)):
-        # print ("iterable_are_equal NPZ type")
-            block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
+        block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
 
-        elif ((type(original_file["path"]) == np.lib.npyio.NpyFile) and (type(new_file["path"]) == np.lib.npyio.NpyFile)):
-        # print ("iterable_are_equal NPZ type")
-            # block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
-            print ("NPY files are not supported yet, please convert to NPZ")
-            block_diff["error"].append("NPY files are not supported yet, please convert to NPZ")
-            block_diff["nerrors"] += 1
+        # elif ((type(original_file["path"]) == np.lib.npyio.NpyFile) and (type(new_file["path"]) == np.lib.npyio.NpyFile)):
+        # # print ("iterable_are_equal NPZ type")
+        #     # block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
+        #     print ("NPY files are not supported yet, please convert to NPZ")
+        #     block_diff["error"].append("NPY files are not supported yet, please convert to NPZ")
+        #     block_diff["nerrors"] += 1
 
     except Exception as e:
         block_diff["error"].append("NPZ compute_differences_report: " + str("".join(traceback.format_exception(e))))
