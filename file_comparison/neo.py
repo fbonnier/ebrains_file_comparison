@@ -2,6 +2,9 @@
 from collections.abc import Iterable
 import neo.io
 import file_comparison.report_generator as rg
+from packaging.version import Version
+
+neo_version = str(neo.io.__version__)
 
 
 def compute_score (number_of_errors, number_of_values):
@@ -30,8 +33,9 @@ def extract_neo_block (block, path, data):
     for isegment_idx in range(len(block.segments)):
         extract_neo_segment (block.segments[isegment_idx], path + "->segment[" + str(isegment_idx) + "]", data)
 
-    for igroup_idx in range(len(block.groups)):
-        extract_neo_group (block.groups[igroup_idx], neoblock2.groups[igroup_idx], path + "->group[" + str(igroup_idx) + "]")
+    if Version(neo_version) >= Version("0.9.0"):
+        for igroup_idx in range(len(block.groups)):
+            extract_neo_group (block.groups[igroup_idx], path + "->group[" + str(igroup_idx) + "]", data)
 
 def extract_neo_group (group, path, data):
 
@@ -221,14 +225,15 @@ def compare_neo_blocks (original_block, new_block, path, block_diff):
         block_diff = compare_segments (original_block.segments[isegment_idx], new_block.segments[isegment_idx], path + "->segment[" + str(isegment_idx) + "]", block_diff)
 
     # Compare groups
-    if len(original_block.groups) != len(new_block.groups):
-        block_diff["error"].append (path + " block have different number of groups")
-        block_diff["nerrors"] += 1
-        block_diff["ndiff"] += abs(len(original_block.groups) - len(new_block.groups))
-        block_diff["log"].append (path + " block have different number of groups")
+    if Version(neo_version) >= Version("0.9.0"):
+        if len(original_block.groups) != len(new_block.groups):
+            block_diff["error"].append (path + " block have different number of groups")
+            block_diff["nerrors"] += 1
+            block_diff["ndiff"] += abs(len(original_block.groups) - len(new_block.groups))
+            block_diff["log"].append (path + " block have different number of groups")
         
-    for igroup_idx in range(min (len(original_block.groups), len(new_block.groups))):
-        block_diff = compare_groups (original_block.groups[igroup_idx], new_block.groups[igroup_idx], path + "->group[" + str(igroup_idx) + "]", block_diff)
+        for igroup_idx in range(min (len(original_block.groups), len(new_block.groups))):
+            block_diff = compare_groups (original_block.groups[igroup_idx], new_block.groups[igroup_idx], path + "->group[" + str(igroup_idx) + "]", block_diff)
 
     return block_diff
 

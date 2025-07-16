@@ -3,6 +3,7 @@ import numpy as np
 
 from collections.abc import Iterable
 import neo.io
+
 # import file_comparison.stats as stats
 # import json
 import file_comparison.report_generator
