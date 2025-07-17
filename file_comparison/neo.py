@@ -226,6 +226,7 @@ def compare_neo_blocks (original_block, new_block, path, block_diff):
 
     # Compare groups
     if Version(neo_version) >= Version("0.9.0"):
+        print ("Use Neo version " + str(Version(neo_version)) + " >= " + str(Version("0.9.0")) + " == " + str(Version(neo_version) >= Version("0.9.0")))
         if len(original_block.groups) != len(new_block.groups):
             block_diff["error"].append (path + " block have different number of groups")
             block_diff["nerrors"] += 1
