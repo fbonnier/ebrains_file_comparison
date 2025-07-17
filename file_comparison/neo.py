@@ -4,7 +4,7 @@ import neo.io
 import file_comparison.report_generator as rg
 from packaging.version import Version
 
-neo_version = str(neo.io.__version__)
+neo_version = str(neo.__version__)
 
 
 def compute_score (number_of_errors, number_of_values):
