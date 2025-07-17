@@ -16,7 +16,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
     block_diff_1list = {"origin": {"type": str(origin.dtype), "value": origin.tolist()}, "new": {"type": str(new.dtype), "value": new.tolist()}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
 
     # If data is STRING, we can compute Levenshtein distance
-    if origin.dtype == "str" and new.dtype == "str":
+    if (origin.dtype == "str" and new.dtype == "str") or (origin.dtype == np.string_ and new.dtype == np.string_) or (origin.dtype == "bytes" and new.dtype == "bytes") or (origin.dtype == np.bytes_ and new.dtype == np.bytes_):
         try:
             block_diff_1list["levenshtein"] = stats.mean_levenshtein_distance_percentage(origin, new)
         except Exception as e:
@@ -31,7 +31,7 @@ def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
             block_diff_1list["error"].append("Mean Nilsimsa Stat: " + str("".join(traceback.format_exception(e))))
             block_diff_1list["nilsimsa"] = None
 
-    # If data is not STRING, we can compute other statistics
+    # If data is not STRING or BYTE, we can compute other statistics
     else:
 
         # Test mean delta
