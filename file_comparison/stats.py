@@ -4,7 +4,7 @@ from nltk.metrics import edit_distance
 import sklearn.metrics
 import numpy as np
 from file_comparison.nilsimsa import nilsimsa_str
-import error_handler as error_handler
+import file_comparison.error_handler as error_handler
 # import nltk.metrics.distance
 
 error_diff_types = ["type", "len"]

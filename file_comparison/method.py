@@ -12,7 +12,7 @@ import file_comparison.text
 import file_comparison.nilsimsa
 from nilsimsa import Nilsimsa, compare_digests
 
-import error_handler as error_handler
+import file_comparison.error_handler as error_handler
 
 
 class Method:

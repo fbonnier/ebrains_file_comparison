@@ -2,7 +2,7 @@
 import os
 import file_comparison.stats as stats
 import numpy as np
-import error_handler as error_handler
+import file_comparison.error_handler as error_handler
 
 error_diff_types = ["type", "len"]
 

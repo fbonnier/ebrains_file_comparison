@@ -2,7 +2,7 @@
 import json
 import file_comparison.report_generator
 import file_comparison.stats as stats
-import error_handler as error_handler
+import file_comparison.error_handler as error_handler
 
 def compute_differences_report (origin, new):
     # Initialize difference block for the pair of files

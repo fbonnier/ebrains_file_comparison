@@ -4,7 +4,7 @@ import numpy as np
 from collections.abc import Iterable
 import file_comparison.report_generator
 import file_comparison.iterables
-import error_handler as error_handler
+import file_comparison.error_handler as error_handler
 from copy import deepcopy
 
 
