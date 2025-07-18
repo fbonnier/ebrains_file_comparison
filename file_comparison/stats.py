@@ -4,7 +4,7 @@ from nltk.metrics import edit_distance
 import sklearn.metrics
 import numpy as np
 from file_comparison.nilsimsa import nilsimsa_str
-import traceback
+import error_handler as error_handler
 # import nltk.metrics.distance
 
 error_diff_types = ["type", "len"]
@@ -16,7 +16,7 @@ def core (origin, new):
         res = (origin - new)/origin
     except Exception as e:
         print ("Core:")
-        print(str("".join(traceback.format_exception(e))))
+        print(str(error_handler.get_traceback(e)))
         if origin == 0. and origin == new:
             res = 0.
     return res
@@ -118,6 +118,6 @@ def count_diffs (origin:np.ndarray, new:np.ndarray):
             if origin[iel] != new[iel]:
                 ndiff += 1
         except Exception as e:
-            error.append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str("".join(traceback.format_exception(e))))
+            error.append("report_generator - Count differences: " + str(type(origin[iel])) + " - " + str(type(new[iel])) + " " + str(error_handler.get_traceback(e)))
 
     return ndiff, error

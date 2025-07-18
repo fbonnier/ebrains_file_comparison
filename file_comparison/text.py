@@ -2,7 +2,7 @@
 import json
 import file_comparison.report_generator
 import file_comparison.stats as stats
-import traceback
+import error_handler as error_handler
 
 def compute_differences_report (origin, new):
     # Initialize difference block for the pair of files
@@ -28,9 +28,9 @@ def compute_differences_report (origin, new):
 
 
     except Exception as e:
-        block_diff["error"].append("TEXT compute_differences_report: " + str("".join(traceback.format_exception(e))))
+        block_diff["error"].append("TEXT compute_differences_report: " + str(error_handler.get_traceback(e)))
         block_diff["nerrors"] += 1
-        print ("TEXT compute_differences_report: " + str("".join(traceback.format_exception(e))))
+        print ("TEXT compute_differences_report: " + str(error_handler.get_traceback(e)))
 
     return block_diff
 
@@ -87,7 +87,7 @@ def check_file_formats (filepath):
         # np.load(filepath, allow_pickle=True)
         return True, None
     except Exception as e:
-        print ("TXT check_file_format: " + str("".join(traceback.format_exception(e))))
+        print ("TXT check_file_format: " + str(error_handler.get_traceback(e)))
         return False, str(e)
 
 # def file_comparison.iterables.iterable_are_equal (original_item, new_item, comparison_path, block_diff):

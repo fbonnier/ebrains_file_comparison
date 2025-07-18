@@ -4,7 +4,7 @@ import numpy as np
 from collections.abc import Iterable
 import file_comparison.report_generator
 import file_comparison.iterables
-import traceback
+import error_handler as error_handler
 from copy import deepcopy
 
 
@@ -48,9 +48,9 @@ def compare_numpy_npz (original_desc, new_desc, comparison_path, block_diff):
         block_diff = file_comparison.iterables.compare_dicts(original_data, new_data, comparison_path+str(type(original_data))+"->", block_diff)
 
     except Exception as e:
-        block_diff["error"].append("NPZ compare_numpy_npz: " + str("".join(traceback.format_exception(e))))
+        block_diff["error"].append("NPZ compare_numpy_npz: " + str(error_handler.get_traceback(e)))
         block_diff["nerrors"] += 1
-        print ("NPZ compare_numpy_npz: " + str("".join(traceback.format_exception(e))))
+        print ("NPZ compare_numpy_npz: " + str(error_handler.get_traceback(e)))
 
     return block_diff
 
@@ -83,9 +83,9 @@ def compute_differences_report (original_file, new_file):
         #     block_diff["nerrors"] += 1
 
     except Exception as e:
-        block_diff["error"].append("NPZ compute_differences_report: " + str("".join(traceback.format_exception(e))))
+        block_diff["error"].append("NPZ compute_differences_report: " + str(error_handler.get_traceback(e)))
         block_diff["nerrors"] += 1
-        print ("NPZ compute_differences_report: " + str("".join(traceback.format_exception(e))))
+        print ("NPZ compute_differences_report: " + str(error_handler.get_traceback(e)))
 
     return block_diff
 
@@ -95,5 +95,5 @@ def check_file_formats (filepath):
         np.load(filepath, allow_pickle=True)
         return True, None
     except Exception as e:
-        print ("NPZ check_file_format: " + str("".join(traceback.format_exception(e))))
+        print ("NPZ check_file_format: " + str(error_handler.get_traceback(e)))
         return False, str(e)
