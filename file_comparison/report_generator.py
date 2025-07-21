@@ -13,7 +13,7 @@ def compute_1el_difference (origin:np.ndarray, new:np.ndarray):
 
 def compute_1list_difference (origin:np.ndarray, new:np.ndarray):
         
-    block_diff_1list = {"origin": {"type": str(origin.dtype), "value": origin.tolist()}, "new": {"type": str(new.dtype), "value": new.tolist()}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
+    block_diff_1list = {"origin": {"type": str(origin.dtype), "value": [str(i) for i in origin.to_list()]}, "new": {"type": str(new.dtype), "value": [str(i) for i in new.to_list()]}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
 
     # If data is STRING, we can compute Levenshtein distance
     if (origin.dtype == "str" and new.dtype == "str") or (origin.dtype == np.string_ and new.dtype == np.string_) or (origin.dtype == "bytes" and new.dtype == "bytes") or (origin.dtype == np.bytes_ and new.dtype == np.bytes_):
