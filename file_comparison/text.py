@@ -6,7 +6,7 @@ import file_comparison.error_handler as error_handler
 
 def compute_differences_report (origin, new):
     # Initialize difference block for the pair of files
-    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "log": [], "error": [], "ndiff": 0, "advice": []}
+    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "nequalvalues": 0, "log": [], "error": [], "ndiff": 0, "advice": []}
 
     try:
     # Check if files can be opened as text

@@ -187,7 +187,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
             block_diff["ndiff"] += 1
             block_diff["report"].append(block_delta)
         else:
-            print (str(original_item) + " and " + str(new_item) + " are equal")
+            block_diff["nequalvalues"] += 1
 
         
     return block_diff

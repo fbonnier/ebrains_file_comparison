@@ -35,6 +35,8 @@ class Method:
     ndiff = 0
     # Total number of values in dataset
     number_of_values = 0
+    # Number of values that are equal
+    nequalvalues = 0
     # Ratio between number of different values and total values: quantity_score = ndiff/number_of_values
     quantity_score = 0.
 
@@ -237,11 +239,12 @@ class Method:
             if block_diff["report"]: self.differences_report = block_diff["report"]
             self.number_of_values = block_diff["nvalues"]
             self.ndiff = block_diff["ndiff"]
+            self.nequalvalues = block_diff["nequalvalues"]
             if block_diff["log"]: self.log = block_diff["log"]
             if block_diff["error"]: self.errors += block_diff["error"]
             if block_diff["advice"]: self.advices += block_diff["advice"]
             
-            
+
         except Exception as e:
             self.log.append ("Method.compute_differences: " + str(error_handler.get_traceback(e)))
             self.errors.append ("Method.compute_differences: " + str(error_handler.get_traceback(e)))
@@ -255,6 +258,7 @@ class Method:
         ipair["differences"] = self.differences_report
         ipair["number_of_errors"] = len(self.errors)
         ipair["number_of_values"] = self.number_of_values
+        ipair["nequalvalues"] = self.nequalvalues
         ipair["ndiff"] = self.ndiff
         
         ipair["mape_score"] = self.mape_score

@@ -240,7 +240,7 @@ def compare_neo_blocks (original_block, new_block, path, block_diff):
 
 
 def compute_differences_report (original_file, new_file):
-    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, 'ndiff': 0, "log": [], "error": []}
+    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, 'ndiff': 0, "nequalvalues": 0, "log": [], "error": []}
     comparison_path = "R"
     try:
         original_neo_reader = neo.io.get_io(original_file["path"])

@@ -70,7 +70,7 @@ def compute_score (number_of_errors, number_of_values):
 # 3
 def compute_differences_report (original_file, new_file):
 
-    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "log": [], "error": [], "ndiff": 0, "advice": []}
+    block_diff = {"report": [], "nerrors": 0, "nvalues": 0, "log": [], "error": [], "ndiff": 0, "nequalvalues": 0, "advice": []}
     comparison_path = new_file["path"]
     try:
         block_diff = compare_numpy_npz (original_file, new_file, comparison_path, block_diff)
