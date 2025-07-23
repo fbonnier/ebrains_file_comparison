@@ -10,7 +10,7 @@ import file_comparison.report_generator
 import file_comparison.neo
 import file_comparison.npz
 
-known_types = [np.lib.npyio.NpzFile, np.ndarray, neo.core.block.Block, neo.core.Segment, str, bytes, np.byte, np.ubyte, np.short, np.ushort, list, tuple, dict, bool, np.bool_, float, np.float64, np.half, np.single, np.double, np.longdouble, np.csingle, np.cdouble, np.clongdouble, int, np.intc, np.uintc, np.int_, np.uint, np.longlong, np.ulonglong, np.str_, neo.core.spiketrain.SpikeTrain, neo.core.analogsignal.AnalogSignal]
+known_types = [np.lib.npyio.NpzFile, np.ndarray, neo.core.block.Block, neo.core.Segment, str, bytes, np.bytes_, np.ubyte, np.short, np.ushort, list, tuple, dict, bool, np.bool_, float, np.float64, np.half, np.single, np.double, np.longdouble, np.csingle, np.cdouble, np.clongdouble, int, np.intc, np.uintc, np.int_, np.uint, np.longlong, np.ulonglong, np.str_, neo.core.spiketrain.SpikeTrain, neo.core.analogsignal.AnalogSignal, None]
 
 container_types = [np.lib.npyio.NpzFile, np.ndarray, neo.core.block.Block, neo.core.Segment, list, dict, neo.core.spiketrain.SpikeTrain, neo.core.analogsignal.AnalogSignal]
 
@@ -142,8 +142,26 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
     elif (type(original_item) == neo.core.Segment) and (type(new_item) == neo.core.Segment):
         # print ("iterable_are_equal NEO Segment")
         block_diff = file_comparison.neo.compare_segments(original_item, new_item, comparison_path+str(original_item.name)+str(type(original_item))+"->", block_diff)
-        
-    elif ((isinstance(original_item, Iterable)) and (isinstance(new_item, Iterable)) and (type(original_item)!=str) and (type(original_item)!= bytes) ):
+    
+     #################   WORD (STR)    ###################
+    # Check if original_item and new_item are strings        
+    elif (type(original_item) == str and type(new_item) == str) or (type(original_item) == np.string_ and type(new_item) == np.string_):
+        block_diff["nvalues"] += 1
+        # if values are not equal
+        if (original_item != new_item):
+            block_delta = file_comparison.report_generator.compute_1el_difference_str (np.array([original_item]), np.array([new_item]))
+            block_diff["report"].append(block_delta)
+
+    #################   BYTES    ###################
+    # Check if original_item and new_item are strings  
+    elif (type(original_item) == bytes and type(new_item) == bytes) or (type(original_item) == np.bytes_ and type(new_item) == np.bytes_):
+        block_diff["nvalues"] += 1
+        # if values are not equal
+        if (original_item != new_item):
+            block_delta = file_comparison.report_generator.compute_1el_difference_str (np.array([str(original_item)]), np.array([str(new_item)]))
+            block_diff["report"].append(block_delta)
+
+    elif ((isinstance(original_item, Iterable)) and (isinstance(new_item, Iterable))):
 
 
         # print ("iterable_are_equal Iterable type")
@@ -163,14 +181,7 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         elif ((isinstance(original_item, dict)) and (isinstance(new_item, dict))):
             block_diff = compare_dicts (original_item, new_item, comparison_path+str(type(original_item))+"->", block_diff)
         
-        #################   WORD (STR)    ###################
-        # Check if original_item and new_item are strings        
-        elif (isinstance(original_item, str) and isinstance(new_item, str)):
-            block_diff["nvalues"] += 1
-            # if values are not equal
-            if (original_item != new_item):
-                block_delta = file_comparison.report_generator.compute_1el_difference (np.array([original_item]), np.array([new_item]))
-                block_diff["report"].append(block_delta)
+       
                     
         else:
             block_diff["error"].append(comparison_path+str(type(original_item)) + " iterable not supported")
