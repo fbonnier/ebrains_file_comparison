@@ -28,7 +28,7 @@ def compute_1list_difference_str (origin:np.ndarray, new:np.ndarray):
     # Test nilsimsa
     # Compute Nilsimsa Distane between two lists
     try:
-        block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin.astype(np.float64), new.astype(np.float64)).item()
+        block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin, new)
     except Exception as e:
         block_diff_1list["error"].append("Mean Nilsimsa Stat: " + str(error_handler.get_traceback(e)))
         block_diff_1list["nilsimsa"] = None
