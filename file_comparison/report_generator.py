@@ -15,7 +15,7 @@ def compute_1el_difference_str (origin:np.ndarray, new:np.ndarray):
 
 def compute_1list_difference_str (origin:np.ndarray, new:np.ndarray):
 
-    block_diff_1list = {"origin": {"type": str(origin.dtype), "value": [str(i) for i in origin.tolist()]}, "new": {"type": str(new.dtype), "value": [str(i) for i in new.tolist()]}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
+    block_diff_1list = {"origin": {"type": str(origin.dtype), "value": [origin.astype(np.str_).tolist()]}, "new": {"type": str(new.dtype), "value": [new.astype(np.str_).tolist()]}, "levenshtein": None, "nilsimsa": None, "rmspe": None, "mspe": None, "mape": None, "mpe": None, "rpd": None , "max delta": None, "delta": None, "quantity": None, "error": [], "log": [], "ndiff": 0, "advice": []}
 
     # If data is STRING, we can compute Levenshtein distance
     # if (origin.dtype == "str" and new.dtype == "str") or (origin.dtype == np.string_ and new.dtype == np.string_) or (origin.dtype == "bytes" and new.dtype == "bytes") or (origin.dtype == np.bytes_ and new.dtype == np.bytes_):
@@ -28,7 +28,7 @@ def compute_1list_difference_str (origin:np.ndarray, new:np.ndarray):
     # Test nilsimsa
     # Compute Nilsimsa Distane between two lists
     try:
-        block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin, new)
+        block_diff_1list["nilsimsa"] = stats.mean_nilsimsa_distance(origin.astype(np.str_), new.astype(np.str_))
     except Exception as e:
         block_diff_1list["error"].append("Mean Nilsimsa Stat: " + str(error_handler.get_traceback(e)))
         block_diff_1list["nilsimsa"] = None
