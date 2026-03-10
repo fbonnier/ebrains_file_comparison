@@ -8,6 +8,7 @@ from math import sqrt
 import file_comparison.neo
 import file_comparison.npz
 import file_comparison.text
+import file_comparison.json_file
 # Nilsimsa
 import file_comparison.nilsimsa
 from nilsimsa import Nilsimsa, compare_digests
@@ -18,9 +19,9 @@ import file_comparison.error_handler as error_handler
 class Method:
 
     __name__ = ""
-    __difference_methods__ = {"neo": file_comparison.neo.compute_differences_report, "npz": file_comparison.npz.compute_differences_report, "byte": file_comparison.nilsimsa.compute_differences_report, "txt": file_comparison.text.compute_differences_report}
-    __score_methods__ = {"neo": file_comparison.neo.compute_score, "npz": file_comparison.npz.compute_score, "byte": file_comparison.nilsimsa.compute_score, "txt": file_comparison.text.compute_score}
-    __check_methods__ = {"neo": file_comparison.neo.check_file_formats, "npz": file_comparison.npz.check_file_formats, "byte": file_comparison.nilsimsa.check_file_formats, "txt": file_comparison.text.check_file_formats}
+    __difference_methods__ = {"neo": file_comparison.neo.compute_differences_report, "npz": file_comparison.npz.compute_differences_report, "byte": file_comparison.nilsimsa.compute_differences_report, "txt": file_comparison.text.compute_differences_report, "json": file_comparison.json_file.compute_differences_report}
+    __score_methods__ = {"neo": file_comparison.neo.compute_score, "npz": file_comparison.npz.compute_score, "byte": file_comparison.nilsimsa.compute_score, "txt": file_comparison.text.compute_score, , "json": file_comparison.json_file.compute_score}
+    __check_methods__ = {"neo": file_comparison.neo.check_file_formats, "npz": file_comparison.npz.check_file_formats, "byte": file_comparison.nilsimsa.check_file_formats, "txt": file_comparison.text.check_file_formats, , "json": file_comparison.json_file.check_file_formats}
 
     # File containing known/expected results
     original_file = None
@@ -93,7 +94,7 @@ class Method:
 
         self.__name__ = ipair["method"]
         # TODO: Replace assert by Exception
-        assert self.__name__ in self.__difference_methods__, "Method \"" + self.__name__ + "\" unsupported. Method should be \"npz\", \"neo\", \"txt\" or \"byte\""
+        assert self.__name__ in self.__difference_methods__, "Method \"" + self.__name__ + "\" unsupported. Method should be \"npz\", \"neo\", \"json\", \"txt\" or \"byte\""
         self.original_file = ipair["Origin"]
         self.new_file = ipair["New"]
 

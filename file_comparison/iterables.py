@@ -143,7 +143,14 @@ def iterable_are_equal (original_item, new_item, comparison_path, block_diff):
         # print ("iterable_are_equal NEO Segment")
         block_diff = file_comparison.neo.compare_segments(original_item, new_item, comparison_path+str(original_item.name)+str(type(original_item))+"->", block_diff)
     
-     #################   WORD (STR)    ###################
+    # #############   JSON.File  #################
+    # # Convert npz files into compatible arrays
+    # elif ((type(original_item) == np.lib.npyio.NpzFile) and (type(new_item) == np.lib.npyio.NpzFile)):
+    #     # print ("iterable_are_equal NPZ type")
+
+    #     block_diff = file_comparison.npz.compare_numpy_npz (original_item, new_item, comparison_path+str(type(original_item))+"->", block_diff)
+    
+    #################   WORD (STR)    ###################
     # Check if original_item and new_item are strings        
     elif (type(original_item) == str and type(new_item) == str) or (type(original_item) == np.string_ and type(new_item) == np.string_):
         block_diff["nvalues"] += 1
